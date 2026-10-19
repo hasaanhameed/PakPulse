@@ -12,6 +12,8 @@
 
 Research is complete, the architecture is proposed and documentation is in progress. **No code yet.**
 
+**Next up: Phase 1, the database (Supabase) and the backend data layer.** The approved plan is in [PHASE1_DATABASE_PLAN.md](PHASE1_DATABASE_PLAN.md).
+
 ## Completed so far
 
 - [x] Research: data access, platforms, NLP approaches and existing tools (see [Decisions → Alternatives researched](DECISIONS.md#alternatives-researched)).
