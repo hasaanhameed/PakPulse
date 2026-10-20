@@ -19,7 +19,7 @@ Research is complete, the architecture is proposed and documentation is in progr
 - [x] Research: data access, platforms, NLP approaches and existing tools (see [Decisions → Alternatives researched](DECISIONS.md#alternatives-researched)).
 - [x] Data collection strategy ([D-006](DECISIONS.md#d-006-monitor-key-accounts-and-a-small-keyword-set), [D-007](DECISIONS.md#d-007-collect-smart)).
 - [x] Cost estimates ([Architecture → Cost model](ARCHITECTURE.md#cost-model)).
-- [x] Prototype scope: one topic, ~6,000 posts, 2–3 snapshots, local run.
+- [x] Prototype scope: one topic, ~6,000 posts, 2–3 collection rounds, local run.
 - [x] Proposed architecture ([Architecture](ARCHITECTURE.md)).
 
 ## Prototype milestones
@@ -34,7 +34,7 @@ Research is complete, the architecture is proposed and documentation is in progr
 - [ ] 8. Embeddings + narrative grouping.
 - [ ] 9. Daily brief generation.
 - [ ] 10. Dashboard screens ([Frontend design](../app/frontend/DESIGN.md)). *In progress: all screens built on mock data (2026-10-19); still to connect to the backend API.*
-- [ ] 11. Run 2–3 snapshots (~6,000 posts) and save them.
+- [ ] 11. Run 2–3 collection rounds (~6,000 posts) and save them.
 - [ ] 12. Demo rehearsal using saved data only.
 
 ## Budget tracker
@@ -73,7 +73,7 @@ Budget tips:
 | 10 | **Common post format** fields, API endpoints and database schema. | Open (to define at build time) |
 | — | Project name: **PakPulse**. | Resolved 2026-10-14 |
 | — | Client naming: **fully generic in all docs** (neither the end client nor the PR company is named). | Resolved 2026-10-14 |
-| — | Raw scraped data snapshots: **not committed** (kept out via `.gitignore`). | Resolved 2026-10-14 |
+| — | Raw scraped data (collection round files): **not committed** (kept out via `.gitignore`). | Resolved 2026-10-14 |
 | — | Decision date 2026-10-14; owner Shahab Najmi / InfinityX Digital LTD, no other contributors listed. | Resolved 2026-10-14 |
 
 ## Risks to watch

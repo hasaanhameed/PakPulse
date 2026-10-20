@@ -96,8 +96,9 @@
 
 - **Date:** 2026-10-14 · **Status:** Accepted
 - **Context:** Data cost scales with the number of posts collected.
-- **Decision:** Collect in snapshots for the prototype (hourly later), take the most-engaged posts first, and skip retweets but count them.
+- **Decision:** Collect in a few manual collection rounds for the prototype (hourly later), take the most-engaged posts first, and skip retweets but count them.
 - **Consequences:** Cost roughly halves without losing the overall picture.
+- **Note (2026-10-20):** wording only. "Snapshots" was renamed "collection rounds"; the decision itself is unchanged.
 - **Alternatives considered:** Collect everything continuously.
 - **See also:** [Flow → Prototype vs future mode](FLOW.md#prototype-vs-future-mode)
 

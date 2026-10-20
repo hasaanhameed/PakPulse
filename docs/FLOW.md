@@ -9,7 +9,7 @@
 ## The pipeline in plain language
 
 1. **Set topics.** An analyst enters keywords and key accounts in English, Urdu and Roman Urdu ([D-006](DECISIONS.md#d-006-monitor-key-accounts-and-a-small-keyword-set)).
-2. **Collect.** The collector pulls the latest posts from X, Instagram and Threads. The prototype uses 2–3 manual snapshots; later collection will be hourly ([D-007](DECISIONS.md#d-007-collect-smart)).
+2. **Collect.** The collector pulls the latest posts from X, Instagram and Threads. The prototype uses 2–3 manual collection rounds; later collection will be hourly ([D-007](DECISIONS.md#d-007-collect-smart)).
 3. **Save the originals.** Raw responses are stored untouched so they can be re-processed when models improve.
 4. **Clean.** Remove duplicates and spam, normalise all platforms into one format, and tag the language.
 5. **Analyse.** AI labels each post for mood, stance toward the topic and likely sarcasm, using context such as the parent post or thread where available. Each label gets a confidence score, and uncertain posts go to a human for checking.
@@ -66,7 +66,7 @@ sequenceDiagram
 | Aspect | Prototype (now) | Future |
 |---|---|---|
 | Collection trigger | Manual **"Collect now"** button | **Hangfire** schedule |
-| Frequency | 2–3 snapshots over a few days | Hourly |
+| Frequency | 2–3 collection rounds over a few days | Hourly |
 | Volume | ~6,000 posts in total, for one topic | ~1,000–5,000 posts/day |
 | Demo data | **Collect once, save, and reuse for every demo. Never re-scrape for a demo.** | Live |
 | Alerts | None | SignalR spike alerts |

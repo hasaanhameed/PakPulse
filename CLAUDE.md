@@ -14,7 +14,7 @@ PakPulse is a social media listening and analysis system built by **InfinityX Di
 
 - **Prototype / proof of concept** for demos.
 - **Budget:** ~Rs 2,000 in total (one-off) for data and AI. It runs locally on a laptop with no hosting cost.
-- One topic, ~6,000 posts collected in 2–3 snapshots. **Collect once, save, and reuse the data for every demo.**
+- One topic, ~6,000 posts collected in 2–3 collection rounds. **Collect once, save, and reuse the data for every demo.**
 - **Dashboard prototype exists on mock data** ([Frontend design](app/frontend/DESIGN.md#mock-data)). No backend, collector or NLP code yet. Do not write code unless asked.
 - Status and milestones: [Progress](docs/PROGRESS.md).
 
@@ -37,7 +37,7 @@ PakPulse is a social media listening and analysis system built by **InfinityX Di
 3. **Ask Shahab when anything is ambiguous.** Do not guess on scope, cost, data sources or architecture.
 4. **Never add a paid service or raise spending without approval.** Respect the spending caps.
 5. **Never scrape platforms directly** or bypass platform blocking ([D-001](docs/DECISIONS.md#d-001-do-not-build-our-own-scrapers)).
-6. **Never commit secrets** (API keys, tokens, `.env` files) or raw scraped data snapshots.
+6. **Never commit secrets** (API keys, tokens, `.env` files) or raw scraped data (collection round files).
 7. **Do not create, rename, move or delete files or folders** without Shahab's approval.
 8. A new architectural decision gets an entry in [Decisions](docs/DECISIONS.md) (append only). A status change gets an update in [Progress](docs/PROGRESS.md).
 9. **Keep cross-links valid** when editing docs. Use relative paths from each file's own location.

@@ -39,7 +39,7 @@ One theme only: no light and dark modes. The interface is built from four brand 
 | **Linen** | `#EDE4D3` | Page background |
 | **Forest night** | `#173A2A` | Main text, headings, the sidebar |
 | **Pine** | `#2D5A43` | Primary buttons, selected nav item and toggles, focus ring, progress |
-| **Moss** | `#4F7552` | Single-series bars (emotions, posts per snapshot), confidence meters |
+| **Moss** | `#4F7552` | Single-series bars (emotions, posts per collection round), confidence meters |
 
 ### Derived from the brand
 
