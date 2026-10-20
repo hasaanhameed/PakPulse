@@ -14,6 +14,29 @@ Research is complete, the architecture is proposed and documentation is in progr
 
 **Next up: the backend data layer** (.NET project, models matching the tables, connection test). Background: [PHASE1_DATABASE_PLAN.md](PHASE1_DATABASE_PLAN.md), partly superseded by [D-021](DECISIONS.md#d-021-database-first-sql-scripts-are-the-master-copy).
 
+## Update log
+
+Newest first. One entry per round of work: what changed and where to read about it.
+
+### 2026-10-20: Database set up on Supabase (Shahab)
+
+- **What:** created the Supabase project (free plan, Mumbai) and built all 16 tables in the `pakpulse` schema, with Row Level Security on. No data yet.
+- **Decided:**
+  - tables first, with SQL scripts as the master copy ([D-021](DECISIONS.md#d-021-database-first-sql-scripts-are-the-master-copy))
+  - Supabase for the prototype only, self-host later ([D-020](DECISIONS.md#d-020-host-the-prototype-database-on-supabase))
+  - the emotion list now matches the dashboard's
+  - "snapshot" renamed to "collection round" everywhere in the docs
+- **Added:**
+  - SQL scripts in [app/database/migrations/](../app/database/migrations/)
+  - the database guide [DATABASE.md](DATABASE.md)
+  - a root `.gitignore`
+- **Read first:** [DATABASE.md](DATABASE.md), then D-020 and D-021.
+- **For the dashboard:** the frontend code still says "snapshot" and uses `ru` for Roman Urdu (see open questions 11–12).
+
+### 2026-10-19: Dashboard prototype on mock data (Hasaan)
+
+- All screens built on made-up data, plus the logo and palette ([Frontend design](../app/frontend/DESIGN.md)) and the frontend stack decision ([D-019](DECISIONS.md#d-019-frontend-stack-app-router-css-modules-recharts)).
+
 ## Completed so far
 
 - [x] Research: data access, platforms, NLP approaches and existing tools (see [Decisions → Alternatives researched](DECISIONS.md#alternatives-researched)).
@@ -69,7 +92,7 @@ Budget tips:
 | 5 | **Frontend styling:** branding (logo, product colors beyond the data palette). | Open (CSS Modules, no component library: [D-019](DECISIONS.md#d-019-frontend-stack-app-router-css-modules-recharts)) |
 | 6 | **X scraping provider:** Apify or twitterapi.io ([D-002](DECISIONS.md#d-002-use-ready-made-scraping-services-for-x-and-instagram)). | Open |
 | 7 | **Auth:** does the prototype need a login, or is it single-user and local? | Open |
-| 8 | **`.gitignore`:** the file is currently empty. Approve the proposed contents. | Open |
+| 8 | **`.gitignore`.** | Resolved 2026-10-20: root `.gitignore` added (app/frontend keeps its own) |
 | 9 | **Review-queue confidence threshold** ([Flow → Human review loop](FLOW.md#human-review-loop)). | Open |
 | 10 | **API endpoints.** | Open (to define at build time). Database schema and common post format resolved 2026-10-20: [Database](DATABASE.md) |
 | 11 | **Brief format:** keep it as plain text, or store it as structured sections with links per claim, as the dashboard shows it? | Open (only matters once briefs are generated) |
