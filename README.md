@@ -36,7 +36,7 @@ PakPulse does aggregate analysis only. It does not profile individuals.
 |---|---|
 | Dashboard | Next.js |
 | Backend API + collectors | ASP.NET Core, Entity Framework Core, Hangfire |
-| Database | PostgreSQL + pgvector |
+| Database | PostgreSQL + pgvector (Supabase for the prototype) |
 | NLP service (proposed) | Python + FastAPI (BERTopic, multilingual models) |
 | AI | External LLM API (provider TBD) |
 | Data sources | Apify / twitterapi.io, Meta Threads API |
@@ -56,6 +56,7 @@ The dashboard talks to the backend API. The backend runs the collectors, stores 
 |---|---|
 | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | Components, data sources, storage, AI layer, costs, risks |
 | [docs/FLOW.md](docs/FLOW.md) | How data moves through the system |
+| [docs/DATABASE.md](docs/DATABASE.md) | The tables, and how to change and connect to the database |
 | [docs/DECISIONS.md](docs/DECISIONS.md) | Why things are built the way they are |
 | [docs/PROGRESS.md](docs/PROGRESS.md) | Status, milestones, budget, open questions |
 | [app/backend/CLAUDE.md](app/backend/CLAUDE.md) | Backend guide |

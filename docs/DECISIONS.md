@@ -33,9 +33,11 @@
 | [D-014](#d-014-build-a-labelled-domain-dataset) | Build a labelled domain dataset | Accepted |
 | [D-015](#d-015-common-interface-for-every-data-source) | Common interface for every data source | Accepted |
 | [D-016](#d-016-never-analyse-the-same-post-twice) | Never analyse the same post twice | Accepted |
-| [D-017](#d-017-run-locally-with-docker-compose) | Run locally with Docker Compose | Accepted |
+| [D-017](#d-017-run-locally-with-docker-compose) | Run locally with Docker Compose | Partly superseded by D-020 |
 | [D-018](#d-018-avoid-vendors-unsuitable-for-the-client) | Avoid vendors unsuitable for the client | Accepted |
 | [D-019](#d-019-frontend-stack-app-router-css-modules-recharts) | Frontend stack: App Router, CSS Modules, Recharts | Accepted |
+| [D-020](#d-020-host-the-prototype-database-on-supabase) | Host the prototype database on Supabase | Accepted |
+| [D-021](#d-021-database-first-sql-scripts-are-the-master-copy) | Database-first: SQL scripts are the master copy | Accepted |
 
 ---
 
@@ -171,7 +173,7 @@
 
 ### D-017 Run locally with Docker Compose
 
-- **Date:** 2026-10-14 · **Status:** Accepted
+- **Date:** 2026-10-14 · **Status:** Partly superseded by [D-020](#d-020-host-the-prototype-database-on-supabase): the database is hosted on Supabase. The rest of the app still runs locally.
 - **Decision:** For the prototype, all services run on a laptop under Docker Compose.
 - **Consequences:** Zero hosting cost and one command to start everything. Hosting and data residency must be revisited after the prototype.
 
@@ -190,6 +192,24 @@
 - **Consequences:** Few dependencies and full control over the look. More CSS is written by hand. The dashboard reads all data through one module (`src/lib/api.ts`), which returns mock data until the backend API exists.
 - **Alternatives considered:** App Router + Tailwind (faster to write, but tends toward the generic look), Pages Router, hand-built SVG charts.
 - **See also:** [Frontend design → Stack](../app/frontend/DESIGN.md#stack)
+
+### D-020 Host the prototype database on Supabase
+
+- **Date:** 2026-10-20 · **Status:** Accepted
+- **Context:** [D-017](#d-017-run-locally-with-docker-compose) planned a local Postgres in Docker. A hosted database lets both developers use the same data without passing files around.
+- **Decision:** For the prototype, the database is a Supabase project on the free plan (PostgreSQL + pgvector, so [D-011](#d-011-single-postgresql-database-with-pgvector) still holds) in region ap-south-1 (Mumbai). All tables live in the `pakpulse` schema with Row Level Security on and no policies, so Supabase's public web API cannot reach them.
+- **Consequences:** No hosting cost and nothing to install. Free projects pause after 7 days without use and are limited to 500 MB, which is enough for the prototype. The data sits in India: note this in the DPIA (UK GDPR). After the prototype we plan to **self-host**, which also answers the data-residency question in [Architecture → Risks and constraints](ARCHITECTURE.md#risks-and-constraints).
+- **Alternatives considered:** Local Postgres in Docker (D-017); a Supabase project in London (simpler for UK GDPR, but not worth it for a prototype database that will be replaced).
+- **See also:** [Database](DATABASE.md)
+
+### D-021 Database-first: SQL scripts are the master copy
+
+- **Date:** 2026-10-20 · **Status:** Accepted
+- **Context:** The [Phase 1 plan](PHASE1_DATABASE_PLAN.md) proposed code-first, where the backend's C# models generate the tables through EF Core migrations. Shahab chose to build the tables first, so the database could be set up and checked before any backend work.
+- **Decision:** Numbered SQL scripts in `app/database/migrations/` are the master copy of the schema. Changes are made by adding a new script and running it in Supabase. The backend's EF Core models are written to match the tables, and EF Core migrations are **not** used to create or change tables.
+- **Consequences:** The database exists before the backend does, and anyone can rebuild it by running the scripts in order. Each schema change takes two steps (script, then models), and nothing checks automatically that the two match, so the backend should test its mappings against the real database.
+- **Alternatives considered:** Code-first EF Core migrations (the standard .NET way, with only one place to change, but the tables would wait on backend code).
+- **See also:** [Database → How to change the database](DATABASE.md#how-to-change-the-database) · [Backend guide](../app/backend/CLAUDE.md)
 
 ---
 

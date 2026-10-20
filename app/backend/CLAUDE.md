@@ -26,11 +26,11 @@ NLP work (labelling, embeddings, narratives, brief) is planned for a separate Py
 | Item | Choice |
 |---|---|
 | Framework | ASP.NET Core ([D-008](../../docs/DECISIONS.md#d-008-backend-framework-is-aspnet-core)) |
-| .NET version | **TBD — to confirm with Shahab** |
-| ORM | Entity Framework Core |
-| Database | PostgreSQL + pgvector ([D-011](../../docs/DECISIONS.md#d-011-single-postgresql-database-with-pgvector)) |
+| .NET version | .NET 10 ([Phase 1 plan](../../docs/PHASE1_DATABASE_PLAN.md)) |
+| ORM | Entity Framework Core with the Npgsql provider. Models map onto the existing tables; EF Core migrations are **not** used ([D-021](../../docs/DECISIONS.md#d-021-database-first-sql-scripts-are-the-master-copy)) |
+| Database | PostgreSQL + pgvector on Supabase, schema `pakpulse` ([D-011](../../docs/DECISIONS.md#d-011-single-postgresql-database-with-pgvector), [D-020](../../docs/DECISIONS.md#d-020-host-the-prototype-database-on-supabase)) |
 | Scheduling | Hangfire (prototype: manual "Collect now" trigger) |
-| Local run | Docker Compose ([D-017](../../docs/DECISIONS.md#d-017-run-locally-with-docker-compose)) |
+| Local run | Runs on the developer's laptop ([D-017](../../docs/DECISIONS.md#d-017-run-locally-with-docker-compose)); connects to Supabase |
 | Auth | **TBD — to confirm with Shahab** |
 
 ## Responsibilities
@@ -48,7 +48,7 @@ NLP work (labelling, embeddings, narratives, brief) is planned for a separate Py
 - **Deduplicate by platform + post ID.** Never analyse a post twice ([D-016](../../docs/DECISIONS.md#d-016-never-analyse-the-same-post-twice)).
 - **Store raw responses as JSONB, untouched.** Cleaning writes to separate records.
 - **Spending caps:** respect the cap on every paid service. Never add a paid service or raise spending without Shahab's approval.
-- **Secrets:** use environment variables or .NET user-secrets only. Never put them in code or committed config.
+- **Secrets:** use .NET user secrets (or environment variables) only. Never put them in code or committed config. See [Secrets and connection](#secrets-and-connection).
 - **Test on ~100 posts** before any full collection run.
 - **Aggregate analysis only.** No features that track or profile individuals ([Architecture → Ethical boundary](../../docs/ARCHITECTURE.md#ethical-boundary)).
 - Any new architectural decision gets an entry in [Decisions](../../docs/DECISIONS.md). Any status change gets an update in [Progress](../../docs/PROGRESS.md).
@@ -57,7 +57,7 @@ NLP work (labelling, embeddings, narratives, brief) is planned for a separate Py
 
 These follow the milestones in [Progress](../../docs/PROGRESS.md#prototype-milestones):
 
-1. Repo scaffolding + Docker Compose (Postgres, backend, NLP service, frontend).
+1. Backend project setup, with models matching the [existing tables](../../docs/DATABASE.md) and a connection test against Supabase.
 2. Collectors: X first, then Instagram, then Threads, each tested on 100 posts.
 3. Cleaning + language tagging.
 4. Hand-off to labelling, embeddings and narratives, then the endpoints the dashboard needs.
@@ -68,4 +68,18 @@ These follow the milestones in [Progress](../../docs/PROGRESS.md#prototype-miles
 
 ## Database schema
 
-**TBD.** Conceptual layers are in [Architecture → Data storage](../../docs/ARCHITECTURE.md#data-storage).
+The tables already exist in Supabase. What each one holds, the allowed values and how to change them: [Database](../../docs/DATABASE.md).
+
+- **The SQL scripts in [app/database/migrations/](../database/migrations/) are the master copy** ([D-021](../../docs/DECISIONS.md#d-021-database-first-sql-scripts-are-the-master-copy)). Write C# models to match the tables. Do not create or alter tables from EF Core.
+- A schema change is a new numbered SQL script, then a matching model change, in the same commit.
+- Map to the `pakpulse` schema with snake_case names. Allowed values (stance, language, emotion…) are stored as lowercase text, e.g. `roman_ur`, `off_topic`.
+
+## Secrets and connection
+
+- Connect through Supabase's **session pooler**. The host, port and user are in [Database → Connecting](../../docs/DATABASE.md#connecting).
+- The **password** lives only in .NET **user secrets** on each developer's laptop, never in `appsettings.json`, a committed `.env` file, code or chat:
+  ```
+  dotnet user-secrets set "ConnectionStrings:PakPulse" "Host=aws-0-ap-south-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.mwbhrzvhloqlrcrcrlwh;Password=<password>;SSL Mode=Require;Search Path=pakpulse,extensions,public"
+  ```
+  Run it from the API project's folder once that project exists. User secrets are stored outside the repo, in your user profile, so they can never be committed by accident.
+- Committed config (`appsettings.json`) may hold the connection string **without** the password, or nothing at all.

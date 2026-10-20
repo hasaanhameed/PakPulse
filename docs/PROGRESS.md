@@ -8,11 +8,11 @@
 
 ## Current status
 
-**Phase:** Prototype / proof of concept (last updated 2026-10-19)
+**Phase:** Prototype / proof of concept (last updated 2026-10-20)
 
-Research is complete, the architecture is proposed and documentation is in progress. **A first version of the dashboard exists, running on mock data** ([Frontend design](../app/frontend/DESIGN.md#mock-data)). There is no backend, collection or NLP code yet.
+Research is complete, the architecture is proposed and documentation is in progress. **A first version of the dashboard exists, running on mock data** ([Frontend design](../app/frontend/DESIGN.md#mock-data)). **The database is set up on Supabase** (16 tables, empty; see [Database](DATABASE.md)). There is no backend, collection or NLP code yet.
 
-**Next up: Phase 1, the database (Supabase) and the backend data layer.** The approved plan is in [PHASE1_DATABASE_PLAN.md](PHASE1_DATABASE_PLAN.md).
+**Next up: the backend data layer** (.NET project, models matching the tables, connection test). Background: [PHASE1_DATABASE_PLAN.md](PHASE1_DATABASE_PLAN.md), partly superseded by [D-021](DECISIONS.md#d-021-database-first-sql-scripts-are-the-master-copy).
 
 ## Completed so far
 
@@ -21,13 +21,14 @@ Research is complete, the architecture is proposed and documentation is in progr
 - [x] Cost estimates ([Architecture → Cost model](ARCHITECTURE.md#cost-model)).
 - [x] Prototype scope: one topic, ~6,000 posts, 2–3 collection rounds, local run.
 - [x] Proposed architecture ([Architecture](ARCHITECTURE.md)).
+- [x] Database created on Supabase: schema `pakpulse`, 16 tables, RLS on (2026-10-20; [Database](DATABASE.md)).
 
 ## Prototype milestones
 
 - [ ] 1. Confirm the [open questions](#open-questions).
 - [ ] 2. Choose the demo topic, ~10 keywords (English / Urdu / Roman Urdu) and key accounts.
 - [ ] 3. Set up accounts and spending caps (Apify / twitterapi.io, Threads API app, LLM provider).
-- [ ] 4. Repo scaffolding + Docker Compose (Postgres, backend, NLP service, frontend).
+- [ ] 4. Repo scaffolding: database *done (Supabase, 2026-10-20)*; backend project next; NLP service depends on [D-010](DECISIONS.md#d-010-add-a-python-nlp-service).
 - [ ] 5. Collectors (X first, then Instagram, then Threads), each tested on 100 posts.
 - [ ] 6. Cleaning + language tagging.
 - [ ] 7. LLM labelling (mood, stance, sarcasm + confidence).
@@ -47,7 +48,7 @@ Prototype budget: **Rs 2,000 (one-off)**. All figures are in Pakistani Rupees at
 | Instagram data (~500–1,000 posts) | Rs 400–750 | |
 | Threads | Free (official API); fallback ~Rs 250–650 | |
 | AI analysis | Rs 300–800 | |
-| Hosting | Rs 0 (local) | |
+| Hosting | Rs 0 (local app + Supabase free plan) | Rs 0 |
 | **Total** | **~Rs 1,000–2,000** | |
 
 Budget tips:
@@ -64,13 +65,15 @@ Budget tips:
 | 1 | **Python NLP service ([D-010](DECISIONS.md#d-010-add-a-python-nlp-service))**: accept it or go .NET-only? If accepted, where does it live in the repo? | Open (D-010 stays Proposed) |
 | 2 | **Demo topic** (a recent naval exercise or geopolitical event). | Open |
 | 3 | **LLM provider and models** for labelling and briefs ([D-012](DECISIONS.md#d-012-two-tier-llm-via-api)). | Open |
-| 4 | **Versions:** .NET version. | Open (Next.js App Router and Node 20.9+ decided in [D-019](DECISIONS.md#d-019-frontend-stack-app-router-css-modules-recharts)) |
+| 4 | **Versions.** | Resolved: .NET 10 ([Phase 1 plan](PHASE1_DATABASE_PLAN.md)); Next.js App Router and Node 20.9+ ([D-019](DECISIONS.md#d-019-frontend-stack-app-router-css-modules-recharts)) |
 | 5 | **Frontend styling:** branding (logo, product colors beyond the data palette). | Open (CSS Modules, no component library: [D-019](DECISIONS.md#d-019-frontend-stack-app-router-css-modules-recharts)) |
 | 6 | **X scraping provider:** Apify or twitterapi.io ([D-002](DECISIONS.md#d-002-use-ready-made-scraping-services-for-x-and-instagram)). | Open |
 | 7 | **Auth:** does the prototype need a login, or is it single-user and local? | Open |
 | 8 | **`.gitignore`:** the file is currently empty. Approve the proposed contents. | Open |
 | 9 | **Review-queue confidence threshold** ([Flow → Human review loop](FLOW.md#human-review-loop)). | Open |
-| 10 | **Common post format** fields, API endpoints and database schema. | Open (to define at build time) |
+| 10 | **API endpoints.** | Open (to define at build time). Database schema and common post format resolved 2026-10-20: [Database](DATABASE.md) |
+| 11 | **Brief format:** keep it as plain text, or store it as structured sections with links per claim, as the dashboard shows it? | Open (only matters once briefs are generated) |
+| 12 | **Roman Urdu code:** the dashboard uses `ru`, the database uses `roman_ur` (`ru` is the standard code for Russian). Suggested: change the dashboard to `roman_ur`. | Open |
 | — | Project name: **PakPulse**. | Resolved 2026-10-14 |
 | — | Client naming: **fully generic in all docs** (neither the end client nor the PR company is named). | Resolved 2026-10-14 |
 | — | Raw scraped data (collection round files): **not committed** (kept out via `.gitignore`). | Resolved 2026-10-14 |

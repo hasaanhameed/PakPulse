@@ -15,7 +15,7 @@ PakPulse is a social media listening and analysis system built by **InfinityX Di
 - **Prototype / proof of concept** for demos.
 - **Budget:** ~Rs 2,000 in total (one-off) for data and AI. It runs locally on a laptop with no hosting cost.
 - One topic, ~6,000 posts collected in 2–3 collection rounds. **Collect once, save, and reuse the data for every demo.**
-- **Dashboard prototype exists on mock data** ([Frontend design](app/frontend/DESIGN.md#mock-data)). No backend, collector or NLP code yet. Do not write code unless asked.
+- **Dashboard prototype exists on mock data** ([Frontend design](app/frontend/DESIGN.md#mock-data)). **Database set up on Supabase** ([Database](docs/DATABASE.md)). No backend, collector or NLP code yet. Do not write code unless asked.
 - Status and milestones: [Progress](docs/PROGRESS.md).
 
 ## Documentation map
@@ -27,6 +27,7 @@ PakPulse is a social media listening and analysis system built by **InfinityX Di
 | [docs/DECISIONS.md](docs/DECISIONS.md) | Decision log (D-001 onwards): the "why" | **Before any work**, and when making a new decision |
 | [docs/PROGRESS.md](docs/PROGRESS.md) | Status, milestones, budget, open questions | **Before any work**, and when status changes |
 | [docs/FLOW.md](docs/FLOW.md) | Pipeline and data flow, human review loop, failure handling | Working on collection, analysis or reporting |
+| [docs/DATABASE.md](docs/DATABASE.md) | Tables, allowed values, how to change the schema, connecting to Supabase | **Before any database or backend work** |
 | [app/backend/CLAUDE.md](app/backend/CLAUDE.md) | Backend conventions and stack | **Before any backend work** |
 | [app/frontend/DESIGN.md](app/frontend/DESIGN.md) | Dashboard screens and design principles | **Before any frontend work** |
 
@@ -72,8 +73,9 @@ PakPulse does **aggregate narrative analysis, not profiling of individuals**. Ne
 PakPulse/
 ├── app/
 │   ├── backend/      ← ASP.NET Core API + collector jobs (CLAUDE.md = backend guide)
+│   ├── database/     ← SQL scripts for the Supabase database (migrations/ = the master copy)
 │   └── frontend/     ← Next.js dashboard (DESIGN.md = design guide)
-├── docs/             ← Architecture, decisions, flow and progress docs
+├── docs/             ← Architecture, database, decisions, flow and progress docs
 ├── .gitignore        ← Git ignore rules (contents pending approval)
 ├── CLAUDE.md         ← This file: Claude Code entry point
 └── README.md         ← Human-facing overview

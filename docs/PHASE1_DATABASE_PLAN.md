@@ -2,7 +2,7 @@
 
 > **Purpose:** The agreed plan for Phase 1: the database design (Supabase), the .NET data layer, and the Supabase setup steps.
 >
-> **Status:** Approved 2026-10-19. Not built yet. Once built, the final table design moves into a dedicated database doc.
+> **Status:** Approved 2026-10-19. **Partly superseded on 2026-10-20:** the tables were built database-first in Supabase ([D-021](DECISIONS.md#d-021-database-first-sql-scripts-are-the-master-copy)), so sections 1 and 4 (code-first EF Core migrations) no longer apply. The database is in Mumbai, not London ([D-020](DECISIONS.md#d-020-host-the-prototype-database-on-supabase)). For the current design, see [Database](DATABASE.md). This plan is kept as a record.
 
 **Related docs:** [Progress](PROGRESS.md) · [Architecture](ARCHITECTURE.md) · [Decisions](DECISIONS.md) · [Flow](FLOW.md) · [Backend guide](../app/backend/CLAUDE.md) · [Root guide](../CLAUDE.md)
 

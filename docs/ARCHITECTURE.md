@@ -28,7 +28,7 @@ PakPulse does **aggregate narrative analysis, not profiling of individuals**. Do
 flowchart TB
     UI[Dashboard<br/>Next.js] --> API[Backend API<br/>ASP.NET Core]
     API --> COL[Collector jobs<br/>.NET / Hangfire]
-    API --> DB[(PostgreSQL<br/>+ pgvector)]
+    API --> DB[(PostgreSQL + pgvector<br/>Supabase)]
     API --> NLP[NLP service<br/>Python / FastAPI]
     COL --> DB
     NLP --> DB
@@ -43,7 +43,7 @@ flowchart TB
 | **Dashboard** | Next.js (charts via a library such as Recharts) | Create topics and keywords. View trend charts, the mood and stance breakdown, top narratives, sample posts and the AI daily brief. Work the human review queue. | Talks **only** to the Backend API. See [Frontend design](../app/frontend/DESIGN.md). |
 | **Backend API** | ASP.NET Core + Entity Framework Core | The single front door for the dashboard. Manages topics, serves results, and triggers collection and analysis runs. | See [Backend guide](../app/backend/CLAUDE.md). |
 | **Collector jobs** | Inside the .NET backend. Hangfire for scheduling (the prototype can use a "Collect now" button) | Call the scraping services and the Threads API, save raw results, and normalise every platform into one common post format. | One `ISourceCollector` per source. |
-| **Database** | PostgreSQL + pgvector | Topics, raw posts, cleaned posts, labels, embeddings, narratives and briefs. | The single store ([D-011](DECISIONS.md#d-011-single-postgresql-database-with-pgvector)). |
+| **Database** | PostgreSQL + pgvector, hosted on Supabase for the prototype ([D-020](DECISIONS.md#d-020-host-the-prototype-database-on-supabase)) | Topics, raw posts, cleaned posts, labels, embeddings, narratives and briefs. | The single store ([D-011](DECISIONS.md#d-011-single-postgresql-database-with-pgvector)). Details: [Database](DATABASE.md). |
 | **NLP service** | Python + FastAPI (**proposed**, [D-010](DECISIONS.md#d-010-add-a-python-nlp-service)) | Clean text and detect language. Send posts to the LLM in batches for mood, stance and sarcasm. Compute embeddings, group posts into narratives with BERTopic, and draft the daily brief. | Called by the backend over HTTP. Repo location **TBD**. |
 | **LLM API** | External, pay-per-use (provider **TBD**) | Labelling (cheap model) and brief writing (stronger model). | [D-012](DECISIONS.md#d-012-two-tier-llm-via-api) |
 | **Scraping services** | External: Apify / twitterapi.io (X, Instagram), Meta Threads API | Source data. | [D-001](DECISIONS.md#d-001-do-not-build-our-own-scrapers) to [D-004](DECISIONS.md#d-004-do-not-use-the-official-x-api-for-now) |
@@ -75,7 +75,7 @@ These are conceptual layers in one PostgreSQL + pgvector database:
 | **Narratives** | Groups of posts, growth indicators and links to member posts. |
 | **Briefs** | AI-written daily briefs with links to source posts. |
 
-**Detailed schema: TBD.**
+**Detailed schema:** see [Database](DATABASE.md). The SQL scripts are the master copy ([D-021](DECISIONS.md#d-021-database-first-sql-scripts-are-the-master-copy)).
 
 ## NLP and AI layer
 
@@ -100,7 +100,7 @@ These are conceptual layers in one PostgreSQL + pgvector database:
 - Deduplicate and cache, so a post is never analysed twice ([D-016](DECISIONS.md#d-016-never-analyse-the-same-post-twice)).
 - Test every pipeline step on ~100 posts before running the full collection.
 - Set a **spending cap** on every paid service.
-- Run locally with Docker Compose ([D-017](DECISIONS.md#d-017-run-locally-with-docker-compose)).
+- Run the app locally ([D-017](DECISIONS.md#d-017-run-locally-with-docker-compose)); the prototype database is on Supabase ([D-020](DECISIONS.md#d-020-host-the-prototype-database-on-supabase)).
 - Never commit API keys or secrets.
 
 ## Cost model
@@ -130,7 +130,7 @@ All figures are in Pakistani Rupees, converted at ~Rs 278 per USD. Services bill
 
 - **Legal:** a legal view is needed on using scraping services for a government-linked client, because of ToS risk.
 - **Data protection:** InfinityX Digital LTD is UK-based, so UK GDPR applies. Public posts are still personal data. A DPIA and a legitimate-interest basis are needed. Keep to aggregate analysis (see [Ethical boundary](#ethical-boundary)).
-- **Hosting and data residency:** the client may require hosting in Pakistan. This matters beyond the prototype.
+- **Hosting and data residency:** the client may require hosting in Pakistan. This matters beyond the prototype. The prototype database is on Supabase in Mumbai; we plan to self-host afterwards ([D-020](DECISIONS.md#d-020-host-the-prototype-database-on-supabase)).
 - **Accuracy:** Roman Urdu and sarcasm detection are unproven until tested on a labelled domain set.
 - **Threads API app review** may delay Threads data ([D-003](DECISIONS.md#d-003-use-the-official-threads-api-for-threads)).
 - **Pakistan X access history:** X was blocked in Pakistan from Feb 2024 to May 2025. This affects comparisons with older local data, but API access from servers abroad is unaffected.
