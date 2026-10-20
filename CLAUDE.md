@@ -15,7 +15,7 @@ PakPulse is a social media listening and analysis system built by **InfinityX Di
 - **Prototype / proof of concept** for demos.
 - **Budget:** ~Rs 2,000 in total (one-off) for data and AI. It runs locally on a laptop with no hosting cost.
 - One topic, ~6,000 posts collected in 2–3 snapshots. **Collect once, save, and reuse the data for every demo.**
-- **No application code yet.** Do not write code unless Shahab asks.
+- **Dashboard prototype exists on mock data** ([Frontend design](app/frontend/DESIGN.md#mock-data)). No backend, collector or NLP code yet. Do not write code unless asked.
 - Status and milestones: [Progress](docs/PROGRESS.md).
 
 ## Documentation map
@@ -43,6 +43,24 @@ PakPulse is a social media listening and analysis system built by **InfinityX Di
 9. **Keep cross-links valid** when editing docs. Use relative paths from each file's own location.
 10. Never invent facts, figures, endpoints, schemas, versions or dates. Write **"TBD — to confirm with Shahab"** and add the item to [Progress → Open questions](docs/PROGRESS.md#open-questions).
 11. **Keep the client generic.** Do not name the end client or the PR company in any doc.
+
+## Teaching as you build
+
+Both developers are **learning ASP.NET Core and Next.js** on this project. Help them build a strong grip on both frameworks, not just working code.
+
+- **Explain key concepts when they come up.** Whenever work uses a framework concept or standard (for example: Next.js server and client components, layouts, file-based routing; ASP.NET Core dependency injection, middleware, controllers, Entity Framework migrations), explain it in plain, simple language: what it is, why the framework works that way, and why this project uses it.
+- **Keep it short and concrete.** A few sentences tied to the code just written, not a lecture. Use an analogy or a small example from this codebase where it helps.
+- **Name the official term** and link the official docs, so they can read further.
+- **Point out the framework's standard way** of doing something, and say so when the code deliberately differs from it, and why.
+- **Explanations go in the reply.** Code comments stay brief: a one-line note where a framework convention would not be obvious to a newcomer (for example, a file that works only because of its name).
+
+## Commit conventions
+
+- **Format:** Conventional Commits, `type(scope): summary`. The scope is optional.
+- **Types:** `feat` (new feature), `fix` (bug fix), `docs` (documentation only), `style` (formatting or CSS with no behaviour change), `refactor` (restructure with no behaviour change), `perf`, `test`, `build` (dependencies, build config), `chore` (housekeeping).
+- **Scopes:** the area touched, e.g. `frontend`, `backend`, `nlp`, `docs`.
+- **One line only.** A short summary in the imperative, lower case, no full stop, no body. Example: `feat(frontend): add review queue screen`.
+- **Group by related change.** Each commit holds one logical change and only the files that belong to it. Split unrelated work into separate commits, e.g. the dashboard screens, the logo and the doc updates are three commits, not one.
 
 ## Ethical boundary
 
