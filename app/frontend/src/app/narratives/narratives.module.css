@@ -1,0 +1,143 @@
+.sort {
+  display: flex;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.sort a {
+  padding: 6px 12px;
+  color: var(--sage);
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.sort a + a {
+  border-left: 1px solid var(--rule-strong);
+}
+
+.sort a[aria-current] {
+  background: var(--pine);
+  color: var(--card);
+}
+
+.list {
+  border-top: 1px solid var(--forest);
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) 210px 200px;
+  gap: 24px;
+  align-items: start;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.rank {
+  padding-top: 2px;
+  color: var(--sage);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 20px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.title a {
+  text-decoration: none;
+}
+
+.title a:hover {
+  text-decoration: underline;
+}
+
+.summary {
+  max-width: 620px;
+  color: var(--sage);
+  font-size: 14px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 16px;
+  margin: 0;
+}
+
+.stats dt {
+  margin-bottom: 4px;
+  color: var(--sage);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.stats dd {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.mix {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 20px;
+}
+
+.mixNote {
+  color: var(--sage);
+  font-size: 12px;
+}
+
+.postsLink {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.footnote {
+  margin-top: 20px;
+  color: var(--sage);
+  font-size: 14px;
+}
+
+@media (max-width: 1100px) {
+  .item {
+    grid-template-columns: 32px minmax(0, 1fr) 200px;
+  }
+
+  .mix {
+    grid-column: 2 / -1;
+    padding-top: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .item {
+    grid-template-columns: 24px minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .stats,
+  .mix {
+    grid-column: 2 / -1;
+  }
+
+  .rank {
+    font-size: 17px;
+  }
+}

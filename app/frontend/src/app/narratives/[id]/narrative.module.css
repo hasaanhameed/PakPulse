@@ -1,0 +1,83 @@
+.back::before {
+  content: "\2190\00a0";
+}
+
+.facts {
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  justify-content: start;
+  gap: 12px 48px;
+  margin: 0 0 24px;
+}
+
+.facts dt {
+  color: var(--sage);
+  font-size: 13px;
+}
+
+.facts dd {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.facts dd > span {
+  margin-left: 4px;
+  font-size: 12px;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  gap: 20px;
+  align-items: start;
+  margin-bottom: 32px;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.caution {
+  padding: 10px 12px;
+  border: 1px dashed var(--sage);
+  border-radius: var(--radius);
+  font-size: 13px;
+}
+
+.terms {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+}
+
+.subTitle {
+  color: var(--sage);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.samplesHead {
+  margin-bottom: 14px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  align-items: start;
+}
+
+@media (max-width: 1000px) {
+  .columns,
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .facts {
+    grid-template-columns: repeat(2, auto);
+  }
+}

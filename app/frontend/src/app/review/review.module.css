@@ -1,0 +1,256 @@
+.layout {
+  display: grid;
+  grid-template-columns: 320px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.queue {
+  position: sticky;
+  top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: calc(100vh - 48px);
+}
+
+.progress {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.progressTrack {
+  height: 4px;
+  border-radius: var(--radius-sm);
+  background: var(--rule);
+}
+
+.progressTrack span {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-sm);
+  background: var(--pine);
+  transition: width 200ms ease;
+}
+
+.items {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 6px;
+  overflow-y: auto;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--card);
+  text-align: left;
+  cursor: pointer;
+}
+
+.item:hover {
+  border-color: var(--rule-strong);
+}
+
+.item[aria-current] {
+  border-color: var(--forest);
+  box-shadow: inset 0 0 0 1px var(--forest);
+}
+
+.itemTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--sage);
+  font-size: 12px;
+}
+
+.itemText {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 13px;
+  line-height: 1.45;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.itemText[lang="ur"] {
+  font-size: 14px;
+  line-height: 2;
+  text-align: right;
+}
+
+.status {
+  align-self: flex-start;
+  padding: 0 6px;
+  border-radius: var(--radius-sm);
+  background: var(--highlight);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.postBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.postText {
+  font-size: 19px;
+  line-height: 1.55;
+}
+
+.postText[lang="ur"] {
+  font-size: 22px;
+  line-height: 2.2;
+}
+
+.labelRows {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.labelRow {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.labelHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.labelName {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.labelScore {
+  color: var(--sage);
+  font-size: 12px;
+}
+
+.labelScore[data-low] {
+  padding: 0 6px;
+  border: 1px dashed var(--sage);
+  border-radius: var(--radius-sm);
+  color: var(--forest);
+  font-weight: 600;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.option {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  background: var(--card);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.option:hover {
+  border-color: var(--sage);
+}
+
+.option[data-checked] {
+  border-color: var(--forest);
+  box-shadow: inset 0 0 0 1px var(--forest);
+}
+
+.option:has(:focus-visible) {
+  outline: 2px solid var(--pine);
+  outline-offset: 2px;
+}
+
+.swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-sm);
+}
+
+.modelMark {
+  padding: 0 4px;
+  border-radius: var(--radius-sm);
+  background: var(--highlight);
+  color: var(--sage);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding-top: 18px;
+  border-top: 1px solid var(--rule);
+}
+
+.saveNote {
+  flex-basis: 100%;
+  margin-top: 4px;
+  color: var(--sage);
+  font-size: 12px;
+}
+
+.emptyQueue {
+  padding: 48px 20px;
+  border: 1px dashed var(--rule-strong);
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+.emptyTitle {
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .queue {
+    position: static;
+    max-height: none;
+  }
+
+  .items {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .items li {
+    flex: 0 0 240px;
+  }
+}

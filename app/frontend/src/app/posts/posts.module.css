@@ -1,0 +1,76 @@
+.filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px 14px;
+  align-items: end;
+  margin-bottom: 24px;
+  padding: 16px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+.control {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.control :global(.select),
+.control :global(.input) {
+  width: 100%;
+}
+
+.search {
+  grid-column: span 2;
+}
+
+.formActions {
+  display: flex;
+  gap: 8px;
+}
+
+.resultsHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 16px;
+  margin-bottom: 14px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 820px;
+}
+
+.empty {
+  padding: 40px 20px;
+  border: 1px dashed var(--rule-strong);
+  border-radius: var(--radius);
+  text-align: center;
+}
+
+.emptyTitle {
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.pager {
+  display: flex;
+  justify-content: space-between;
+  max-width: 820px;
+  margin-top: 20px;
+}
+
+@media (max-width: 520px) {
+  .search {
+    grid-column: 1 / -1;
+  }
+
+  .filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,132 @@
+.back::before {
+  content: "\2190\00a0";
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.post {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 14px;
+}
+
+.text {
+  font-size: 19px;
+  line-height: 1.55;
+}
+
+.text[lang="ur"] {
+  font-size: 22px;
+  line-height: 2.2;
+}
+
+.source {
+  padding-top: 12px;
+  border-top: 1px solid var(--rule);
+}
+
+.side {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.labels {
+  display: flex;
+  flex-direction: column;
+  margin-top: 14px;
+}
+
+.label {
+  display: grid;
+  grid-template-columns: 70px minmax(0, 1fr) 80px 58px;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  border-top: 1px solid var(--rule);
+  font-size: 13px;
+}
+
+.labelName {
+  color: var(--sage);
+}
+
+.labelValue {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+}
+
+.swatch {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-sm);
+}
+
+/* Confidence meter: graphite fill on a track, with a tick at the review threshold. */
+.meter {
+  position: relative;
+  height: 6px;
+  border-radius: var(--radius-sm);
+  background: var(--rule);
+}
+
+.meterFill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: var(--radius-sm);
+  background: var(--moss);
+}
+
+.label[data-low] .meterFill {
+  background: transparent;
+  border: 1px dashed var(--forest);
+}
+
+.meterMark {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 1px;
+  background: var(--forest);
+}
+
+.score {
+  text-align: right;
+}
+
+.label[data-low] .score {
+  font-weight: 600;
+}
+
+.lowText {
+  font-weight: 500;
+}
+
+.uses {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.uses li {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr);
+  gap: 10px;
+}
+
+@media (max-width: 900px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

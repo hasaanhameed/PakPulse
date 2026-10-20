@@ -1,0 +1,268 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 20px;
+  align-items: start;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.section > label {
+  display: block;
+}
+
+.section > label :global(.input),
+.section > label :global(.textarea) {
+  width: 100%;
+  max-width: 560px;
+}
+
+.sectionHead {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.keywordGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+
+.keywordColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+}
+
+.keywordColumn + .keywordColumn {
+  border-left: 1px solid var(--rule);
+}
+
+.columnTitle {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.keywords {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 28px;
+}
+
+.keyword {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 28px;
+  padding: 0 2px 0 8px;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  background: var(--linen);
+  font-size: 13px;
+}
+
+[dir="rtl"] .keyword {
+  padding: 0 8px 0 2px;
+}
+
+.keyword[lang="ur"] {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.keyword[lang="ur"] span {
+  padding-bottom: 3px;
+}
+
+.remove {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--sage);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.remove:hover {
+  background: var(--highlight);
+  color: var(--forest);
+}
+
+.addRow {
+  display: flex;
+  gap: 6px;
+  margin-top: auto;
+}
+
+.addRow :global(.input) {
+  flex: 1 1 0;
+  width: 0;
+  min-width: 0;
+}
+
+.tableScroll {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.table th {
+  padding: 0 12px 8px 0;
+  border-bottom: 1px solid var(--rule);
+  color: var(--sage);
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.table td {
+  padding: 6px 12px 6px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.handle {
+  font-weight: 500;
+}
+
+.rowAction {
+  text-align: right;
+}
+
+.accountAdd {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.grow {
+  flex: 1;
+  min-width: 160px;
+}
+
+.grow :global(.input) {
+  width: 100%;
+}
+
+.saveBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+}
+
+.collection {
+  position: sticky;
+  top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.snapshots {
+  align-self: stretch;
+  border-top: 1px solid var(--rule);
+}
+
+.snapshot {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.snapshotHead {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.snapshotName {
+  font-weight: 600;
+}
+
+.confirm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--forest);
+  border-radius: var(--radius);
+  font-size: 13px;
+}
+
+.confirmActions {
+  display: flex;
+  gap: 8px;
+}
+
+/* System error: Chilli, always with an icon and text. */
+.error {
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--chilli);
+  border-radius: var(--radius);
+  font-size: 13px;
+}
+
+.errorIcon {
+  flex: none;
+  margin-top: 2px;
+  color: var(--chilli);
+}
+
+.errorTitle {
+  font-weight: 600;
+}
+
+.error :global(.btn) {
+  margin: 6px 0 0 -8px;
+}
+
+@media (max-width: 1000px) {
+  .layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .collection {
+    position: static;
+  }
+}
+
+@media (max-width: 700px) {
+  .keywordGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .keywordColumn + .keywordColumn {
+    border-left: 0;
+    border-top: 1px solid var(--rule);
+  }
+}
