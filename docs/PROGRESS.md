@@ -8,9 +8,9 @@
 
 ## Current status
 
-**Phase:** Prototype / proof of concept (last updated 2026-10-14)
+**Phase:** Prototype / proof of concept (last updated 2026-10-19)
 
-Research is complete, the architecture is proposed and documentation is in progress. **No code yet.**
+Research is complete, the architecture is proposed and documentation is in progress. **A first version of the dashboard exists, running on mock data** ([Frontend design](../app/frontend/DESIGN.md#mock-data)). There is no backend, collection or NLP code yet.
 
 **Next up: Phase 1, the database (Supabase) and the backend data layer.** The approved plan is in [PHASE1_DATABASE_PLAN.md](PHASE1_DATABASE_PLAN.md).
 
@@ -33,7 +33,7 @@ Research is complete, the architecture is proposed and documentation is in progr
 - [ ] 7. LLM labelling (mood, stance, sarcasm + confidence).
 - [ ] 8. Embeddings + narrative grouping.
 - [ ] 9. Daily brief generation.
-- [ ] 10. Dashboard screens ([Frontend design](../app/frontend/DESIGN.md)).
+- [ ] 10. Dashboard screens ([Frontend design](../app/frontend/DESIGN.md)). *In progress: all screens built on mock data (2026-10-19); still to connect to the backend API.*
 - [ ] 11. Run 2–3 snapshots (~6,000 posts) and save them.
 - [ ] 12. Demo rehearsal using saved data only.
 
@@ -64,8 +64,8 @@ Budget tips:
 | 1 | **Python NLP service ([D-010](DECISIONS.md#d-010-add-a-python-nlp-service))**: accept it or go .NET-only? If accepted, where does it live in the repo? | Open (D-010 stays Proposed) |
 | 2 | **Demo topic** (a recent naval exercise or geopolitical event). | Open |
 | 3 | **LLM provider and models** for labelling and briefs ([D-012](DECISIONS.md#d-012-two-tier-llm-via-api)). | Open |
-| 4 | **Versions:** .NET version, Next.js router (App vs Pages), Node version. | Open |
-| 5 | **Frontend styling:** Tailwind, component library, branding. | Open |
+| 4 | **Versions:** .NET version. | Open (Next.js App Router and Node 20.9+ decided in [D-019](DECISIONS.md#d-019-frontend-stack-app-router-css-modules-recharts)) |
+| 5 | **Frontend styling:** branding (logo, product colors beyond the data palette). | Open (CSS Modules, no component library: [D-019](DECISIONS.md#d-019-frontend-stack-app-router-css-modules-recharts)) |
 | 6 | **X scraping provider:** Apify or twitterapi.io ([D-002](DECISIONS.md#d-002-use-ready-made-scraping-services-for-x-and-instagram)). | Open |
 | 7 | **Auth:** does the prototype need a login, or is it single-user and local? | Open |
 | 8 | **`.gitignore`:** the file is currently empty. Approve the proposed contents. | Open |

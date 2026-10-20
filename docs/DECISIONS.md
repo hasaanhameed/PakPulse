@@ -35,6 +35,7 @@
 | [D-016](#d-016-never-analyse-the-same-post-twice) | Never analyse the same post twice | Accepted |
 | [D-017](#d-017-run-locally-with-docker-compose) | Run locally with Docker Compose | Accepted |
 | [D-018](#d-018-avoid-vendors-unsuitable-for-the-client) | Avoid vendors unsuitable for the client | Accepted |
+| [D-019](#d-019-frontend-stack-app-router-css-modules-recharts) | Frontend stack: App Router, CSS Modules, Recharts | Accepted |
 
 ---
 
@@ -179,6 +180,15 @@
 - **Context:** Some narrative-intelligence vendors, such as Israeli-headquartered Cyabra, are unlikely to be procurable for the client.
 - **Decision:** Do not depend on vendors that are unsuitable for the client.
 - **Consequences:** This is one of the reasons a custom build makes sense.
+
+### D-019 Frontend stack: App Router, CSS Modules, Recharts
+
+- **Date:** 2026-10-19 · **Status:** Accepted (approved by Hasaan)
+- **Context:** [D-009](#d-009-frontend-framework-is-nextjs) left the router and styling open. The dashboard must avoid a generic template look ([Frontend design](../app/frontend/DESIGN.md)).
+- **Decision:** Use the Next.js App Router, CSS Modules with the named palette as CSS variables, and Recharts for charts. No component library and no Tailwind.
+- **Consequences:** Few dependencies and full control over the look. More CSS is written by hand. The dashboard reads all data through one module (`src/lib/api.ts`), which returns mock data until the backend API exists.
+- **Alternatives considered:** App Router + Tailwind (faster to write, but tends toward the generic look), Pages Router, hand-built SVG charts.
+- **See also:** [Frontend design → Stack](../app/frontend/DESIGN.md#stack)
 
 ---
 
