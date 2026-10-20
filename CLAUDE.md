@@ -76,7 +76,7 @@ PakPulse/
 │   ├── database/     ← SQL scripts for the Supabase database (migrations/ = the master copy)
 │   └── frontend/     ← Next.js dashboard (DESIGN.md = design guide)
 ├── docs/             ← Architecture, database, decisions, flow and progress docs
-├── .gitignore        ← Git ignore rules (contents pending approval)
+├── .gitignore        ← Git ignore rules (build output, secrets, local data)
 ├── CLAUDE.md         ← This file: Claude Code entry point
 └── README.md         ← Human-facing overview
 ```

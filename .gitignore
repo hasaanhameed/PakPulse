@@ -1,0 +1,31 @@
+# .NET
+bin/
+obj/
+*.user
+.vs/
+
+# Node / Next.js (app/frontend also has its own .gitignore)
+node_modules/
+.next/
+out/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Secrets and environment
+.env
+.env.*
+!.env.example
+appsettings.*.local.json
+secrets.json
+
+# Local data: raw collection round files and database dumps (never commit)
+/data/
+*.dump
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
