@@ -1,0 +1,48 @@
+.block {
+  display: block;
+  border-radius: var(--radius-sm);
+  background: var(--rule);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+
+.figure {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--card);
+}

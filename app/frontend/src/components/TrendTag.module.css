@@ -1,0 +1,18 @@
+.tag {
+  display: inline-block;
+  padding: 0 6px;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-sm);
+  color: var(--sage);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.tag[data-trend="emerging"],
+.tag[data-trend="growing"] {
+  border-color: var(--forest);
+  color: var(--forest);
+}

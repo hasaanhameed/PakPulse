@@ -1,0 +1,25 @@
+.app {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.main {
+  min-width: 0;
+  padding: 32px 40px 64px;
+}
+
+.main > * {
+  max-width: var(--content-max);
+  margin-inline: auto;
+}
+
+@media (max-width: 900px) {
+  .app {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .main {
+    padding: 20px 16px 48px;
+  }
+}

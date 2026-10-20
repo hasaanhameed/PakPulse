@@ -1,0 +1,160 @@
+/* The sidebar is the one Forest night surface; everything on it uses the on-forest tokens. */
+.sidebar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  height: 100vh;
+  padding: 24px 16px 20px;
+  background: var(--forest);
+  color: var(--on-forest);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  padding: 0 8px 0 4px;
+  color: var(--on-forest);
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.mark {
+  flex: none;
+  width: 30px;
+  height: 30px;
+}
+
+.topic {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 20px;
+  padding: 12px 8px 0;
+  border-top: 1px solid var(--pine);
+}
+
+.topicLabel {
+  color: var(--on-forest-muted);
+  font-size: 12px;
+}
+
+.topicName {
+  font-weight: 600;
+}
+
+.topicMeta {
+  color: var(--on-forest-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 8px;
+  border-radius: var(--radius);
+  color: var(--on-forest-muted);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+/* Hovered and current items sit on Linen, like a tab cut out of the page. */
+.navLink:hover,
+.navLink[aria-current="page"] {
+  color: var(--forest);
+  background: var(--linen);
+}
+
+.navLink[aria-current="page"] {
+  font-weight: 600;
+}
+
+.navLink:focus-visible {
+  outline-color: var(--on-forest);
+}
+
+.count {
+  min-width: 28px;
+  padding: 0 6px;
+  border: 1px solid var(--moss);
+  border-radius: var(--radius-sm);
+  color: var(--on-forest);
+  font-size: 12px;
+  text-align: center;
+}
+
+.navLink:hover .count,
+.navLink[aria-current="page"] .count {
+  border-color: var(--pine);
+  color: var(--forest);
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    position: static;
+    height: auto;
+    gap: 12px;
+    padding: 14px 16px 0;
+  }
+
+  .top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .brand {
+    padding: 0;
+    font-size: 19px;
+  }
+
+  .mark {
+    width: 24px;
+    height: 24px;
+  }
+
+  .topic {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    text-align: right;
+  }
+
+  .topicLabel,
+  .topicMeta {
+    display: none;
+  }
+
+  .nav {
+    margin: 0 -16px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav ul {
+    flex-direction: row;
+    gap: 4px;
+    padding: 0 16px 10px;
+  }
+
+  .navLink {
+    white-space: nowrap;
+  }
+}

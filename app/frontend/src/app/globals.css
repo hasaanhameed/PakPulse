@@ -1,0 +1,241 @@
+/* PakPulse design tokens. One theme only. Palette names and rules: DESIGN.md -> Color palette. */
+
+:root {
+  /* Brand palette */
+  --linen: #ede4d3; /* Linen: page background */
+  --forest: #173a2a; /* Forest night: text, sidebar */
+  --pine: #2d5a43; /* Pine: buttons, selected states */
+  --moss: #4f7552; /* Moss: single-series bars, meters */
+
+  /* Derived from the brand palette */
+  --card: #f6f0e3; /* lighter linen for panels */
+  --rule: #d9ceb9;
+  --rule-strong: #c3b59c;
+  --highlight: #e4d9c3;
+  --sage: #566a5c; /* secondary text */
+  --moss-tint: #b9c9b3; /* earlier values beside a Moss bar */
+  --on-forest: #ede4d3;
+  --on-forest-muted: #a9b8a8;
+
+  /* Data: stance (never green, so data never looks like interface) */
+  --indus: #235e92;
+  --stone: #ada492;
+  --kiln: #b4532a;
+
+  /* Data: mood */
+  --haldi: #9a6a00;
+  --jamun: #6d4590;
+
+  /* System */
+  --chilli: #a3261f;
+
+  --radius: 4px;
+  --radius-sm: 2px;
+  --sidebar-width: 236px;
+  --content-max: 1120px;
+
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--linen);
+  color: var(--forest);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+dl,
+dd,
+figure {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  text-decoration-color: currentColor;
+}
+
+:focus-visible {
+  outline: 2px solid var(--pine);
+  outline-offset: 2px;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* Urdu script: right to left, Nastaliq needs extra line height. */
+[lang="ur"] {
+  font-family: var(--font-urdu), "Noto Nastaliq Urdu", serif;
+  line-height: 2.1;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Buttons and form controls, shared by every screen. */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 14px;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  background: var(--card);
+  color: var(--forest);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.btn:hover {
+  border-color: var(--sage);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--pine);
+  border-color: var(--pine);
+  color: var(--linen);
+}
+
+.btn-primary:hover {
+  background: var(--forest);
+  border-color: var(--forest);
+}
+
+.btn-quiet {
+  border-color: transparent;
+  background: transparent;
+  padding: 0 8px;
+}
+
+.btn-quiet:hover {
+  border-color: var(--rule-strong);
+}
+
+.input,
+.select,
+.textarea {
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  background: var(--card);
+  font-size: 14px;
+}
+
+.textarea {
+  height: auto;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.input:focus-visible,
+.select:focus-visible,
+.textarea:focus-visible {
+  outline: 2px solid var(--pine);
+  outline-offset: 0;
+}
+
+.field-label {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--sage);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Shared content blocks */
+
+.panel {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.section-note {
+  color: var(--sage);
+  font-size: 13px;
+}
+
+.muted {
+  color: var(--sage);
+}
+
+.link-arrow {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

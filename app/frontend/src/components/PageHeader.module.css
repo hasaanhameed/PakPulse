@@ -1,0 +1,47 @@
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 24px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.text {
+  min-width: 0;
+  max-width: 760px;
+}
+
+.eyebrow {
+  margin-bottom: 6px;
+  color: var(--sage);
+  font-size: 13px;
+}
+
+.title {
+  font-family: var(--font-serif), Georgia, serif;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.meta {
+  margin-top: 6px;
+  color: var(--sage);
+  font-size: 14px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 25px;
+  }
+}
