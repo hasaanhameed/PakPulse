@@ -58,7 +58,7 @@ export default async function NarrativePage({ params }: Params) {
           <dd className="tabular">{formatNumber(narrative.posts)}</dd>
         </div>
         <div>
-          <dt>Change since last snapshot</dt>
+          <dt>Change since last round</dt>
           <dd className="tabular">
             {narrative.change === null ? "New" : formatChange(narrative.change)}{" "}
             {narrative.trend !== "steady" && <TrendTag trend={narrative.trend} />}
@@ -77,7 +77,7 @@ export default async function NarrativePage({ params }: Params) {
       <div className={styles.columns}>
         <section className={`panel ${styles.block}`} aria-labelledby="per-snapshot">
           <h2 id="per-snapshot" className="section-title">
-            Posts per snapshot
+            Posts per round
           </h2>
           <SnapshotColumns values={narrative.bySnapshot} labels={snapshotLabels} />
         </section>

@@ -71,7 +71,7 @@ export default async function NarrativesPage({
                   <dd className="tabular">{n.change === null ? "New" : formatChange(n.change)}</dd>
                 </div>
                 <div>
-                  <dt>By snapshot</dt>
+                  <dt>By round</dt>
                   <dd>
                     <SnapshotColumns values={n.bySnapshot} labels={snapshotLabels} mini />
                   </dd>

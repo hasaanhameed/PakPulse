@@ -32,7 +32,7 @@ export default async function BriefPage({ searchParams }: { searchParams: Promis
         title={`Brief for ${formatDate(brief.date)}`}
         meta={
           <>
-            Drafted by AI from {snapshot?.label.toLowerCase() ?? "the latest snapshot"} at{" "}
+            Drafted by AI from {snapshot?.label.toLowerCase() ?? "the latest round"} at{" "}
             {formatDateTime(brief.generatedAt)}. Every claim links to the posts it rests on. Check them
             before you share anything.
           </>

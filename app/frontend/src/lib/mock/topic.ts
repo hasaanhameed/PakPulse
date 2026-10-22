@@ -23,7 +23,7 @@ export const topic: Topic = {
   snapshots: [
     {
       id: "s1",
-      label: "Snapshot 1",
+      label: "Round 1",
       windowStart: "2026-10-13T18:00:00+05:00",
       collectedAt: "2026-10-14T12:00:00+05:00",
       posts: 1544,
@@ -32,7 +32,7 @@ export const topic: Topic = {
     },
     {
       id: "s2",
-      label: "Snapshot 2",
+      label: "Round 2",
       windowStart: "2026-10-14T12:00:00+05:00",
       collectedAt: "2026-10-16T12:00:00+05:00",
       posts: 2031,
@@ -41,7 +41,7 @@ export const topic: Topic = {
     },
     {
       id: "s3",
-      label: "Snapshot 3",
+      label: "Round 3",
       windowStart: "2026-10-16T12:00:00+05:00",
       collectedAt: "2026-10-18T12:00:00+05:00",
       posts: 2387,

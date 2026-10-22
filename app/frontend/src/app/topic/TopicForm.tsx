@@ -276,7 +276,7 @@ export function TopicForm({ topic }: { topic: Topic }) {
           Collection
         </h2>
         <p className="section-note">
-          The prototype collects in snapshots, then reuses the saved data for every demo.
+          The prototype collects in a few rounds, then reuses the saved data for every demo.
         </p>
         <ol className={styles.snapshots}>
           {topic.snapshots.map((s) => (
@@ -301,8 +301,8 @@ export function TopicForm({ topic }: { topic: Topic }) {
         {collect === "confirm" && (
           <div className={styles.confirm}>
             <p>
-              <strong>Run a new snapshot?</strong> It uses paid data and AI credits. Demos should reuse
-              the saved snapshots instead.
+              <strong>Run a new collection round?</strong> It uses paid data and AI credits. Demos should
+              reuse the saved rounds instead.
             </p>
             <div className={styles.confirmActions}>
               <button type="button" className="btn btn-primary" onClick={() => setCollect("unavailable")}>

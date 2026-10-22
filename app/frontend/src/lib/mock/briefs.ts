@@ -14,7 +14,7 @@ export const briefs: Brief[] = [
         heading: "Summary",
         items: [
           {
-            text: "Critical posts rose to 60% of the 2,387 posts in snapshot 3, up from 52% in snapshot 2. Anger and worry about knock-on costs drive most of them.",
+            text: "Critical posts rose to 60% of the 2,387 posts in round 3, up from 52% in round 2. Anger and worry about knock-on costs drive most of them.",
             cites: ["p07", "p08", "p25"],
           },
           {
@@ -24,7 +24,7 @@ export const briefs: Brief[] = [
         ],
       },
       {
-        heading: "What changed since snapshot 2",
+        heading: "What changed since round 2",
         items: [
           {
             text: "A possible transporters' strike is the fastest-growing narrative, up from 104 to 371 posts. Most posts report the strike call or warn of market shortages rather than take a side.",
@@ -78,7 +78,7 @@ export const briefs: Brief[] = [
         heading: "Summary",
         items: [
           {
-            text: "The relief package announced on 15 Oct lifted supportive posts to 448, or 22% of snapshot 2. That is the highest supportive share so far.",
+            text: "The relief package announced on 15 Oct lifted supportive posts to 448, or 22% of round 2. That is the highest supportive share so far.",
             cites: ["p17", "p18", "p22"],
           },
           {
@@ -88,7 +88,7 @@ export const briefs: Brief[] = [
         ],
       },
       {
-        heading: "What changed since snapshot 1",
+        heading: "What changed since round 1",
         items: [
           {
             text: "Jokes and memes about the price fell slightly but remain the third-largest narrative.",

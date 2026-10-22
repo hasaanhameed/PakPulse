@@ -44,7 +44,7 @@ export default async function PostPage({ params }: Params) {
           </Link>
         }
         title="Post details"
-        meta={`${LANGUAGE_LABEL[post.language]} post from ${snapshot?.label ?? "an unknown snapshot"}.`}
+        meta={`${LANGUAGE_LABEL[post.language]} post from ${snapshot?.label ?? "an unknown round"}.`}
         actions={
           isLowConfidence(post) ? (
             <Link href={`/review?post=${post.id}`} className="btn btn-primary">
