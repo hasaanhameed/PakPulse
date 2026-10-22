@@ -5,6 +5,7 @@ import { LANGUAGE_TAG, PLATFORM_LABEL } from "@/lib/labels";
 import { engagementText, isLowConfidence } from "@/lib/post-utils";
 import type { Post } from "@/lib/types";
 import { LabelChips } from "./LabelChips";
+import { PlatformIcon } from "./PlatformIcon";
 import styles from "./PostCard.module.css";
 
 interface PostCardProps {
@@ -33,11 +34,16 @@ export function PostText({ post, className }: { post: Post; className?: string }
 export function PostMeta({ post }: { post: Post }) {
   return (
     <p className={styles.meta}>
-      <span className={styles.platform}>{PLATFORM_LABEL[post.platform]}</span>
+      <span className={styles.platform}>
+        <PlatformIcon platform={post.platform} />
+        {PLATFORM_LABEL[post.platform]}
+      </span>
       <span lang={post.language === "ur" ? "ur" : undefined} className={styles.lang}>
         {LANGUAGE_TAG[post.language]}
       </span>
-      <time dateTime={post.postedAt}>{formatDateTime(post.postedAt)}</time>
+      <time dateTime={post.postedAt} className="tabular">
+        {formatDateTime(post.postedAt)}
+      </time>
     </p>
   );
 }

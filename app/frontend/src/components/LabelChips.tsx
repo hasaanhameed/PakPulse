@@ -1,7 +1,7 @@
 import { REVIEW_THRESHOLD } from "@/lib/config";
-import { formatConfidence } from "@/lib/format";
 import { cssVar, EMOTION_LABEL, SENTIMENT_META, STANCE_META } from "@/lib/labels";
 import type { PostLabels } from "@/lib/types";
+import { ConfidenceMeter } from "./ConfidenceMeter";
 import styles from "./LabelChips.module.css";
 
 interface ChipProps {
@@ -20,8 +20,8 @@ function Chip({ name, value, confidence, swatch, hatched }: ChipProps) {
       {swatch && <span className={styles.swatch} style={{ background: cssVar(swatch) }} />}
       {hatched && <span className={`${styles.swatch} ${styles.hatch}`} />}
       <span className={styles.value}>{value}</span>
-      <span className={`${styles.confidence} tabular`} title="Confidence score">
-        {formatConfidence(confidence)}
+      <span className={styles.confidence} title="Confidence score">
+        <ConfidenceMeter confidence={confidence} />
         {low && <span className="visually-hidden"> (low confidence)</span>}
       </span>
     </li>

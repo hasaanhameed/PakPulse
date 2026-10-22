@@ -4,9 +4,7 @@
   justify-content: space-between;
   gap: 16px 24px;
   flex-wrap: wrap;
-  margin-bottom: 28px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--rule);
+  margin-bottom: 24px;
 }
 
 .text {
@@ -21,16 +19,17 @@
 }
 
 .title {
-  font-size: 30px;
+  font-size: 26px;
   font-weight: 600;
   line-height: 1.2;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
 }
 
 .meta {
-  margin-top: 6px;
+  margin-top: 4px;
   color: var(--sage);
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .actions {
@@ -41,6 +40,6 @@
 
 @media (max-width: 600px) {
   .title {
-    font-size: 25px;
+    font-size: 23px;
   }
 }

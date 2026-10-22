@@ -1,0 +1,42 @@
+.meter {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 1.5px;
+  height: 11px;
+}
+
+.bar {
+  width: 3px;
+  border-radius: 1px;
+  background: var(--rule-strong);
+}
+
+.bar:nth-child(1) {
+  height: 5px;
+}
+
+.bar:nth-child(2) {
+  height: 7px;
+}
+
+.bar:nth-child(3) {
+  height: 9px;
+}
+
+.bar:nth-child(4) {
+  height: 11px;
+}
+
+.bar[data-on] {
+  background: var(--forest);
+}
+
+.value {
+  color: var(--sage);
+}
