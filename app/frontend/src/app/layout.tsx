@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Sans, Noto_Nastaliq_Urdu, Source_Serif_4 } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans, Noto_Nastaliq_Urdu } from "next/font/google";
 
 import { Sidebar } from "@/components/Sidebar";
 import { getOverview, getTopic } from "@/lib/api";
@@ -8,15 +8,16 @@ import styles from "./layout.module.css";
 
 const sans = IBM_Plex_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
   variable: "--font-sans",
   display: "swap",
 });
 
-const serif = Source_Serif_4({
+// Numbers, times and scores use the monospace partner of Plex Sans (DESIGN.md -> Type).
+const mono = IBM_Plex_Mono({
   subsets: ["latin"],
-  weight: ["400", "600"],
-  variable: "--font-serif",
+  weight: ["400", "500", "600"],
+  variable: "--font-mono",
   display: "swap",
 });
 
@@ -37,7 +38,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const [topic, overview] = await Promise.all([getTopic(), getOverview()]);
 
   return (
-    <html lang="en" className={`${sans.variable} ${serif.variable} ${urdu.variable}`}>
+    <html lang="en" className={`${sans.variable} ${mono.variable} ${urdu.variable}`}>
       <body>
         <div className={styles.app}>
           <Sidebar

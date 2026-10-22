@@ -186,7 +186,6 @@
   flex-direction: column;
   gap: 10px;
   max-width: 720px;
-  font-family: var(--font-serif), Georgia, serif;
   font-size: 17px;
   line-height: 1.6;
 }
