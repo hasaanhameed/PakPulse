@@ -35,7 +35,7 @@
 | [D-016](#d-016-never-analyse-the-same-post-twice) | Never analyse the same post twice | Accepted |
 | [D-017](#d-017-run-locally-with-docker-compose) | Run locally with Docker Compose | Partly superseded by D-020 |
 | [D-018](#d-018-avoid-vendors-unsuitable-for-the-client) | Avoid vendors unsuitable for the client | Accepted |
-| [D-019](#d-019-frontend-stack-app-router-css-modules-recharts) | Frontend stack: App Router, CSS Modules, Recharts | Accepted |
+| [D-019](#d-019-frontend-stack-app-router-css-modules-recharts) | Frontend stack: App Router, CSS Modules, Recharts | Accepted; Recharts part superseded by D-022 |
 | [D-020](#d-020-host-the-prototype-database-on-supabase) | Host the prototype database on Supabase | Accepted |
 | [D-021](#d-021-database-first-sql-scripts-are-the-master-copy) | Database-first: SQL scripts are the master copy | Accepted |
 | [D-022](#d-022-dashboard-look-the-forest-frame) | Dashboard look: the Forest frame | Accepted |
@@ -187,7 +187,7 @@
 
 ### D-019 Frontend stack: App Router, CSS Modules, Recharts
 
-- **Date:** 2026-10-19 · **Status:** Accepted (approved by Hasaan)
+- **Date:** 2026-10-19 · **Status:** Accepted (approved by Hasaan). The Recharts part is superseded by [D-022](#d-022-dashboard-look-the-forest-frame): charts are hand-drawn SVG, and Recharts was removed on 2026-10-22.
 - **Context:** [D-009](#d-009-frontend-framework-is-nextjs) left the router and styling open. The dashboard must avoid a generic template look ([Frontend design](../app/frontend/DESIGN.md)).
 - **Decision:** Use the Next.js App Router, CSS Modules with the named palette as CSS variables, and Recharts for charts. No component library and no Tailwind.
 - **Consequences:** Few dependencies and full control over the look. More CSS is written by hand. The dashboard reads all data through one module (`src/lib/api.ts`), which returns mock data until the backend API exists.
@@ -217,7 +217,7 @@
 - **Date:** 2026-10-22 · **Status:** Accepted
 - **Context:** The first dashboard read like a newspaper: serif headings, paper colors, explanations under every heading and the brief as long paragraphs. Shahab wanted it livelier, more modern and easier to scan, without looking AI-generated.
 - **Decision:** Keep the light Linen theme, framed in Forest night (the sidebar and the overview's pulse band). Drop the serif for IBM Plex Sans, with IBM Plex Mono for every number. Replace explanation sentences with ⓘ tips, show confidence as a signal meter, and lay the brief out as numbered claims with their sources underneath. Emotions take the color of the mood they lean to.
-- **Consequences:** More visual variety with no new interface colors, and much less text on screen. One new data color (Slate, for humour). The overview's Recharts volume chart became a hand-drawn pulse line, so Recharts is no longer used by any screen.
+- **Consequences:** More visual variety with no new interface colors, and much less text on screen. One new data color (Slate, for humour). The overview's Recharts volume chart became a hand-drawn pulse line, so all charts are now plain SVG and CSS and the Recharts package was removed (Shahab, 2026-10-22).
 - **Alternatives considered:** A full dark "monitoring console" theme (rejected as looking AI-generated), the Linen theme only tidied up, and a brighter off-white "paper" theme with 100-square waffle charts.
 - **See also:** [Frontend design → Look and feel](../app/frontend/DESIGN.md#look-and-feel-the-forest-frame)
 

@@ -146,7 +146,7 @@ The mark is a single line: a heartbeat runs in from the left and becomes the P. 
 | Framework | Next.js 16 ([D-009](../../docs/DECISIONS.md#d-009-frontend-framework-is-nextjs)) |
 | Router (App vs Pages) | App Router ([D-019](../../docs/DECISIONS.md#d-019-frontend-stack-app-router-css-modules-recharts)) |
 | Node version | 20.9 or later (Next.js minimum). Developed on Node 24. |
-| Charts | Hand-drawn SVG and CSS bars (pulse line, sparklines, proportion bars, round columns). Recharts is still installed ([D-019](../../docs/DECISIONS.md#d-019-frontend-stack-app-router-css-modules-recharts)) but no screen uses it since the overview's stacked volume chart became the pulse line; whether to remove it is open |
+| Charts | Hand-drawn SVG and CSS bars (pulse line, sparklines, proportion bars, round columns). No chart library: Recharts was removed on 2026-10-22 ([D-022](../../docs/DECISIONS.md#d-022-dashboard-look-the-forest-frame)) |
 | Styling / component library | CSS Modules plus CSS variables. No component library ([D-019](../../docs/DECISIONS.md#d-019-frontend-stack-app-router-css-modules-recharts)) |
 | Fonts | IBM Plex Sans (interface), IBM Plex Mono (numbers, times and scores), Noto Nastaliq Urdu (Urdu script). No serif |
 | Auth / login | **TBD — to confirm with Shahab** |
@@ -166,7 +166,7 @@ Then open http://localhost:3000. `npm run build` checks types and builds for pro
 | Path | What it holds |
 |---|---|
 | `src/app/` | One folder per screen: overview (`page.tsx`), `narratives/`, `posts/`, `brief/`, `review/`, `topic/` |
-| `src/components/` | Shared pieces: sidebar and nav icons, logo mark, page header, info tip, post card, label chips, confidence meter, platform icons, proportion bar, pulse chart, sparkline, round columns, skeletons. `VolumeChart.tsx` is no longer used (kept until removal is agreed) |
+| `src/components/` | Shared pieces: sidebar and nav icons, logo mark, page header, info tip, post card, label chips, confidence meter, platform icons, proportion bar, pulse chart, sparkline, round columns, skeletons |
 | `src/lib/api.ts` | **The only data source.** Every function returns mock data today; swap each body for a backend call when the API exists |
 | `src/lib/mock/` | Hand-written mock topic, posts, narratives, aggregates and briefs. Not real data |
 | `src/lib/config.ts` | Review threshold (placeholder 0.60) and other settings |

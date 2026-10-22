@@ -40,7 +40,7 @@ flowchart TB
 
 | Component | Tech | Responsibility | Boundary |
 |---|---|---|---|
-| **Dashboard** | Next.js (charts via a library such as Recharts) | Create topics and keywords. View trend charts, the mood and stance breakdown, top narratives, sample posts and the AI daily brief. Work the human review queue. | Talks **only** to the Backend API. See [Frontend design](../app/frontend/DESIGN.md). |
+| **Dashboard** | Next.js, with hand-drawn SVG charts ([D-022](DECISIONS.md#d-022-dashboard-look-the-forest-frame)) | Create topics and keywords. View trend charts, the mood and stance breakdown, top narratives, sample posts and the AI daily brief. Work the human review queue. | Talks **only** to the Backend API. See [Frontend design](../app/frontend/DESIGN.md). |
 | **Backend API** | ASP.NET Core + Entity Framework Core | The single front door for the dashboard. Manages topics, serves results, and triggers collection and analysis runs. | See [Backend guide](../app/backend/CLAUDE.md). |
 | **Collector jobs** | Inside the .NET backend. Hangfire for scheduling (the prototype can use a "Collect now" button) | Call the scraping services and the Threads API, save raw results, and normalise every platform into one common post format. | One `ISourceCollector` per source. |
 | **Database** | PostgreSQL + pgvector, hosted on Supabase for the prototype ([D-020](DECISIONS.md#d-020-host-the-prototype-database-on-supabase)) | Topics, raw posts, cleaned posts, labels, embeddings, narratives and briefs. | The single store ([D-011](DECISIONS.md#d-011-single-postgresql-database-with-pgvector)). Details: [Database](DATABASE.md). |

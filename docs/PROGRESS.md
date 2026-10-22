@@ -27,7 +27,7 @@ Newest first. One entry per round of work: what changed and where to read about 
   - no dark mode (tried and rejected as AI-looking)
   - emotions colored by the mood they lean to
 - **Read first:** [Frontend design → Look and feel](../app/frontend/DESIGN.md#look-and-feel-the-forest-frame).
-- **Still open:** whether to remove the unused Recharts chart and dependency.
+- **Removed:** the unused Recharts chart and the Recharts package. All charts are now plain SVG and CSS.
 
 ### 2026-10-20: Database set up on Supabase (Shahab)
 
