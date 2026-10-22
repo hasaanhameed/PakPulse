@@ -26,13 +26,13 @@ export default async function NarrativesPage({
     getTopic(),
     getUnclusteredCount(),
   ]);
-  const snapshotLabels = topic.snapshots.map((_, i) => `S${i + 1}`);
+  const snapshotLabels = topic.snapshots.map((_, i) => `R${i + 1}`);
 
   return (
     <div>
       <PageHeader
         title="Narratives"
-        meta={`${narratives.length} narratives found across ${topic.snapshots.length} snapshots. Change compares the last two snapshots.`}
+        meta={`${narratives.length} narratives across ${topic.snapshots.length} collection rounds. Change compares the last two rounds.`}
         actions={
           <nav className={styles.sort} aria-label="Sort narratives">
             <Link href="/narratives" aria-current={sort === "size" ? "true" : undefined}>

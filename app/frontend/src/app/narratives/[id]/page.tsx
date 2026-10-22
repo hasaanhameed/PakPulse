@@ -59,8 +59,8 @@ export default async function NarrativePage({ params }: Params) {
         </div>
         <div>
           <dt>Change since last round</dt>
-          <dd className="tabular">
-            {narrative.change === null ? "New" : formatChange(narrative.change)}{" "}
+          <dd>
+            <span className="tabular">{narrative.change === null ? "New" : formatChange(narrative.change)}</span>
             {narrative.trend !== "steady" && <TrendTag trend={narrative.trend} />}
           </dd>
         </div>

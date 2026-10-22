@@ -2,35 +2,49 @@
   content: "\2190\00a0";
 }
 
+/* Key facts as figure boxes, matching the overview. */
 .facts {
-  display: grid;
-  grid-template-columns: repeat(4, auto);
-  justify-content: start;
-  gap: 12px 48px;
-  margin: 0 0 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 0 0 16px;
+}
+
+.facts > div {
+  display: flex;
+  flex: 1 1 180px;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 20px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+  background: var(--card);
 }
 
 .facts dt {
   color: var(--sage);
-  font-size: 13px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .facts dd {
-  font-size: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  font-size: 24px;
   font-weight: 600;
-}
-
-.facts dd > span {
-  margin-left: 4px;
-  font-size: 12px;
+  letter-spacing: -0.02em;
 }
 
 .columns {
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
-  gap: 20px;
+  gap: 16px;
   align-items: start;
-  margin-bottom: 32px;
+  margin-bottom: 28px;
 }
 
 .block {
@@ -77,7 +91,4 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .facts {
-    grid-template-columns: repeat(2, auto);
-  }
 }
