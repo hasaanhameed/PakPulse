@@ -64,7 +64,7 @@ export default async function PostsPage({ searchParams }: { searchParams: Search
     <div>
       <PageHeader
         title="Posts"
-        meta="Every chart and narrative leads here. Filter to see the posts behind a number."
+        meta="Filter to see the posts behind any number."
       />
 
       <AutoSubmitForm className={styles.filters}>
