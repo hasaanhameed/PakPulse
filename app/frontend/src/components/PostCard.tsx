@@ -11,7 +11,7 @@ import styles from "./PostCard.module.css";
 interface PostCardProps {
   post: Post;
   narrativeTitle?: string | null;
-  /** Compact cards hide engagement and the narrative line. */
+  /** Compact cards hide engagement, the narrative line, emotion and sarcasm. */
   compact?: boolean;
   /** Citation number, shown when the card is a brief source. */
   number?: number;
@@ -60,7 +60,8 @@ export function PostCard({ post, narrativeTitle, compact = false, number, id }: 
 
       <PostText post={post} className={styles.text} />
 
-      <LabelChips labels={post.labels} />
+      {/* Compact cards (brief sources) show stance and mood only; the post page has every label. */}
+      <LabelChips labels={post.labels} only={compact ? ["stance", "sentiment"] : undefined} />
 
       <footer className={styles.foot}>
         {!compact && narrativeTitle !== undefined && (

@@ -33,8 +33,8 @@ export default async function BriefPage({ searchParams }: { searchParams: Promis
         meta={
           <>
             Drafted by AI from {snapshot?.label.toLowerCase() ?? "the latest round"} at{" "}
-            {formatDateTime(brief.generatedAt)}. Every claim links to the posts it rests on. Check them
-            before you share anything.
+            <span className="tabular">{formatDateTime(brief.generatedAt)}</span>. Check the sources before you
+            share anything.
           </>
         }
         actions={
@@ -54,30 +54,35 @@ export default async function BriefPage({ searchParams }: { searchParams: Promis
 
       <div className={styles.layout}>
         <article className={styles.brief}>
-          {brief.sections.map((section) => (
-            <section key={section.heading} className={styles.section}>
-              <h2 className={styles.heading}>{section.heading}</h2>
-              {section.items.map((item) => (
-                <p key={item.text} className={styles.claim}>
-                  {item.text}
-                  {item.cites.length > 0 ? (
-                    <span className={styles.cites}>
-                      {item.cites.map((c) => (
-                        <a
-                          key={c}
-                          href={`#source-${c}`}
-                          className={`${styles.cite} tabular`}
-                          aria-label={`Source ${numberOf(c)}`}
-                        >
-                          {numberOf(c)}
-                        </a>
-                      ))}
-                    </span>
-                  ) : (
-                    <span className={styles.dataNote}>Data note</span>
-                  )}
-                </p>
-              ))}
+          {brief.sections.map((section, si) => (
+            <section key={section.heading} className={`panel ${styles.section}`} data-lead={si === 0 || undefined}>
+              <h2 className="eyebrow">{section.heading}</h2>
+              <ol className={styles.claims}>
+                {section.items.map((item) => (
+                  <li key={item.text} className={styles.claim}>
+                    <p className={styles.claimText}>{item.text}</p>
+                    <p className={styles.cites}>
+                      {item.cites.length > 0 ? (
+                        <>
+                          <span className={styles.citesLabel}>Sources</span>
+                          {item.cites.map((c) => (
+                            <a
+                              key={c}
+                              href={`#source-${c}`}
+                              className={`${styles.cite} tabular`}
+                              aria-label={`Source ${numberOf(c)}`}
+                            >
+                              {numberOf(c)}
+                            </a>
+                          ))}
+                        </>
+                      ) : (
+                        <span className={styles.dataNote}>Data note, no source posts</span>
+                      )}
+                    </p>
+                  </li>
+                ))}
+              </ol>
             </section>
           ))}
         </article>

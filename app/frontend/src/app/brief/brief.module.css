@@ -19,59 +19,103 @@
 }
 
 .dates a[aria-current] {
-  background: var(--pine);
-  color: var(--card);
+  background: var(--forest);
+  color: var(--linen);
 }
 
 .layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 380px;
-  gap: 40px;
+  gap: 24px;
   align-items: start;
 }
 
-/* The brief reads like a memo: serif, measured line length. */
+/* One panel per section; each claim is a short numbered row with its sources underneath. */
 .brief {
   display: flex;
   flex-direction: column;
-  gap: 28px;
-  max-width: 680px;
+  gap: 16px;
+  counter-reset: claim;
 }
 
 .section {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 4px;
 }
 
-.heading {
-  padding-bottom: 6px;
-  border-bottom: 1px solid var(--rule);
-  font-size: 14px;
-  font-weight: 600;
+/* The opening summary leads: slightly larger text on the highlight surface. */
+.section[data-lead] {
+  background: var(--highlight);
+}
+
+.section[data-lead] .claimText {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.claims {
+  display: flex;
+  flex-direction: column;
 }
 
 .claim {
-  font-size: 18px;
-  line-height: 1.6;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 6px 10px;
+  padding: 12px 0;
+  border-top: 1px solid var(--rule);
+  counter-increment: claim;
+}
+
+.claim:first-child {
+  border-top: 0;
+}
+
+.claim:last-child {
+  padding-bottom: 0;
+}
+
+/* Claims are numbered through the whole brief. */
+.claim::before {
+  content: counter(claim);
+  grid-row: span 2;
+  color: var(--sage);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.claimText {
+  max-width: 720px;
+  font-size: 15px;
+  line-height: 1.55;
+  text-wrap: pretty;
 }
 
 .cites {
-  display: inline-flex;
-  gap: 3px;
-  margin-left: 6px;
-  vertical-align: 2px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  color: var(--sage);
+  font-size: 12px;
+}
+
+.citesLabel {
+  margin-right: 4px;
 }
 
 .cite {
   display: inline-grid;
   place-items: center;
-  min-width: 20px;
-  height: 20px;
+  min-width: 22px;
+  height: 22px;
   padding: 0 4px;
   border: 1px solid var(--rule-strong);
   border-radius: var(--radius-sm);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  color: var(--forest);
   font-size: 11px;
   font-weight: 600;
   line-height: 1;
@@ -81,19 +125,15 @@
 .cite:hover {
   border-color: var(--forest);
   background: var(--forest);
-  color: var(--card);
+  color: var(--linen);
 }
 
 .dataNote {
-  margin-left: 8px;
   padding: 1px 6px;
   border: 1px dashed var(--sage);
   border-radius: var(--radius-sm);
-  color: var(--sage);
-  font-family: var(--font-sans), system-ui, sans-serif;
   font-size: 11px;
   font-weight: 500;
-  vertical-align: 2px;
   white-space: nowrap;
 }
 
@@ -106,8 +146,10 @@
 }
 
 .sourcesTitle {
+  display: flex;
+  gap: 8px;
   margin-bottom: 12px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
 }
 
@@ -126,11 +168,5 @@
     position: static;
     max-height: none;
     overflow: visible;
-  }
-}
-
-@media (max-width: 600px) {
-  .claim {
-    font-size: 17px;
   }
 }
