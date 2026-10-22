@@ -8,7 +8,7 @@
 
 ## Current status
 
-**Phase:** Prototype / proof of concept (last updated 2026-10-20)
+**Phase:** Prototype / proof of concept (last updated 2026-10-22)
 
 Research is complete, the architecture is proposed and documentation is in progress. **A first version of the dashboard exists, running on mock data** ([Frontend design](../app/frontend/DESIGN.md#mock-data)). **The database is set up on Supabase** (16 tables, empty; see [Database](DATABASE.md)). There is no backend, collection or NLP code yet.
 
@@ -17,6 +17,17 @@ Research is complete, the architecture is proposed and documentation is in progr
 ## Update log
 
 Newest first. One entry per round of work: what changed and where to read about it.
+
+### 2026-10-22: Dashboard redesign, the Forest frame (Shahab)
+
+- **What:** every screen restyled after comparing mock-ups. The light theme stays, framed in dark green (sidebar and the overview's pulse band). There's no serif, and numbers are in monospace. Explanations moved behind ⓘ buttons. Confidence is shown as a signal meter, and the brief is laid out as numbered claims with their sources.
+- **Overview:** a new pulse line of post volume, varied key figures, "Narratives to watch" with trend lines, and "Three things to know" beside the posts behind them.
+- **Decided:**
+  - [D-022](DECISIONS.md#d-022-dashboard-look-the-forest-frame)
+  - no dark mode (tried and rejected as AI-looking)
+  - emotions colored by the mood they lean to
+- **Read first:** [Frontend design → Look and feel](../app/frontend/DESIGN.md#look-and-feel-the-forest-frame).
+- **Still open:** whether to remove the unused Recharts chart and dependency.
 
 ### 2026-10-20: Database set up on Supabase (Shahab)
 
@@ -57,7 +68,7 @@ Newest first. One entry per round of work: what changed and where to read about 
 - [ ] 7. LLM labelling (mood, stance, sarcasm + confidence).
 - [ ] 8. Embeddings + narrative grouping.
 - [ ] 9. Daily brief generation.
-- [ ] 10. Dashboard screens ([Frontend design](../app/frontend/DESIGN.md)). *In progress: all screens built on mock data (2026-10-19); still to connect to the backend API.*
+- [ ] 10. Dashboard screens ([Frontend design](../app/frontend/DESIGN.md)). *In progress: all screens built on mock data (2026-10-19) and redesigned (2026-10-22, [D-022](DECISIONS.md#d-022-dashboard-look-the-forest-frame)); still to connect to the backend API.*
 - [ ] 11. Run 2–3 collection rounds (~6,000 posts) and save them.
 - [ ] 12. Demo rehearsal using saved data only.
 
@@ -89,7 +100,7 @@ Budget tips:
 | 2 | **Demo topic** (a recent naval exercise or geopolitical event). | Open |
 | 3 | **LLM provider and models** for labelling and briefs ([D-012](DECISIONS.md#d-012-two-tier-llm-via-api)). | Open |
 | 4 | **Versions.** | Resolved: .NET 10 ([Phase 1 plan](PHASE1_DATABASE_PLAN.md)); Next.js App Router and Node 20.9+ ([D-019](DECISIONS.md#d-019-frontend-stack-app-router-css-modules-recharts)) |
-| 5 | **Frontend styling:** branding (logo, product colors beyond the data palette). | Open (CSS Modules, no component library: [D-019](DECISIONS.md#d-019-frontend-stack-app-router-css-modules-recharts)) |
+| 5 | **Frontend styling.** | Resolved: CSS Modules, no component library ([D-019](DECISIONS.md#d-019-frontend-stack-app-router-css-modules-recharts)); logo chosen 2026-10-20; look and feel 2026-10-22 ([D-022](DECISIONS.md#d-022-dashboard-look-the-forest-frame)) |
 | 6 | **X scraping provider:** Apify or twitterapi.io ([D-002](DECISIONS.md#d-002-use-ready-made-scraping-services-for-x-and-instagram)). | Open |
 | 7 | **Auth:** does the prototype need a login, or is it single-user and local? | Open |
 | 8 | **`.gitignore`.** | Resolved 2026-10-20: root `.gitignore` added (app/frontend keeps its own) |

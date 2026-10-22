@@ -38,6 +38,7 @@
 | [D-019](#d-019-frontend-stack-app-router-css-modules-recharts) | Frontend stack: App Router, CSS Modules, Recharts | Accepted |
 | [D-020](#d-020-host-the-prototype-database-on-supabase) | Host the prototype database on Supabase | Accepted |
 | [D-021](#d-021-database-first-sql-scripts-are-the-master-copy) | Database-first: SQL scripts are the master copy | Accepted |
+| [D-022](#d-022-dashboard-look-the-forest-frame) | Dashboard look: the Forest frame | Accepted |
 
 ---
 
@@ -210,6 +211,15 @@
 - **Consequences:** The database exists before the backend does, and anyone can rebuild it by running the scripts in order. Each schema change takes two steps (script, then models), and nothing checks automatically that the two match, so the backend should test its mappings against the real database.
 - **Alternatives considered:** Code-first EF Core migrations (the standard .NET way, with only one place to change, but the tables would wait on backend code).
 - **See also:** [Database → How to change the database](DATABASE.md#how-to-change-the-database) · [Backend guide](../app/backend/CLAUDE.md)
+
+### D-022 Dashboard look: the Forest frame
+
+- **Date:** 2026-10-22 · **Status:** Accepted
+- **Context:** The first dashboard read like a newspaper: serif headings, paper colors, explanations under every heading and the brief as long paragraphs. Shahab wanted it livelier, more modern and easier to scan, without looking AI-generated.
+- **Decision:** Keep the light Linen theme, framed in Forest night (the sidebar and the overview's pulse band). Drop the serif for IBM Plex Sans, with IBM Plex Mono for every number. Replace explanation sentences with ⓘ tips, show confidence as a signal meter, and lay the brief out as numbered claims with their sources underneath. Emotions take the color of the mood they lean to.
+- **Consequences:** More visual variety with no new interface colors, and much less text on screen. One new data color (Slate, for humour). The overview's Recharts volume chart became a hand-drawn pulse line, so Recharts is no longer used by any screen.
+- **Alternatives considered:** A full dark "monitoring console" theme (rejected as looking AI-generated), the Linen theme only tidied up, and a brighter off-white "paper" theme with 100-square waffle charts.
+- **See also:** [Frontend design → Look and feel](../app/frontend/DESIGN.md#look-and-feel-the-forest-frame)
 
 ---
 
