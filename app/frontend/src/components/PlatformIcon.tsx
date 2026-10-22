@@ -2,7 +2,13 @@ import type { Platform } from "@/lib/types";
 
 /** Simple outline marks for each platform, drawn on the same grid as the nav icons. Not the official logos. */
 const PATHS: Record<Platform, React.ReactNode> = {
-  x: <path d="M5 5l14 14M19 5 5 19" />,
+  // X sits in a rounded square so it reads as a platform mark, not a close button.
+  x: (
+    <>
+      <rect x="3.5" y="3.5" width="17" height="17" rx="4" />
+      <path d="M9 9l6 6M15 9l-6 6" />
+    </>
+  ),
   instagram: (
     <>
       <rect x="3.5" y="3.5" width="17" height="17" rx="5" />

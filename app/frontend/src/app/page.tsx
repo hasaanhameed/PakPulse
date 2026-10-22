@@ -1,12 +1,16 @@
 import Link from "next/link";
 
+import { InfoTip } from "@/components/InfoTip";
 import { PageHeader } from "@/components/PageHeader";
+import { PlatformIcon } from "@/components/PlatformIcon";
+import { PostCard } from "@/components/PostCard";
 import { Legend, ProportionBar } from "@/components/ProportionBar";
+import { PulseChart } from "@/components/PulseChart";
+import { Sparkline } from "@/components/Sparkline";
 import { TrendTag } from "@/components/TrendTag";
-import { VolumeChart } from "@/components/VolumeChart";
-import { getBrief, getNarratives, getOverview, getTopic } from "@/lib/api";
+import { getBrief, getNarratives, getOverview, getPostsByIds, getTopic } from "@/lib/api";
 import { REVIEW_THRESHOLD } from "@/lib/config";
-import { formatChange, formatDate, formatNumber, formatShare, formatShortDate } from "@/lib/format";
+import { formatChange, formatDateTime, formatNumber, formatShare } from "@/lib/format";
 import {
   EMOTION_LABEL,
   EMOTIONS,
@@ -18,136 +22,184 @@ import {
 } from "@/lib/labels";
 import { postsHref } from "@/lib/post-utils";
 import { sentimentSegments, stanceSegments } from "@/lib/segments";
+import type { Emotion } from "@/lib/types";
 import styles from "./page.module.css";
+
+/** Emotions take the color of the mood they lean to, so color still means something (DESIGN.md -> Data colors). */
+const EMOTION_TOKEN: Record<Emotion, string> = {
+  anger: "--jamun",
+  worry: "--jamun",
+  disappointment: "--jamun",
+  hope: "--haldi",
+  humour: "--slate",
+  none: "--stone",
+};
 
 export default async function OverviewPage() {
   const [topic, overview, narratives, brief] = await Promise.all([
     getTopic(),
     getOverview(),
-    getNarratives("size"),
+    getNarratives("growth"),
     getBrief(),
   ]);
   const { totals } = overview;
-  const first = topic.snapshots[0];
-  const last = topic.snapshots[topic.snapshots.length - 1];
+  const rounds = topic.snapshots;
+  const last = rounds[rounds.length - 1];
+  const prev = rounds[rounds.length - 2] ?? last;
+  const criticalShare = (s: (typeof rounds)[number]) => s.byStance.critical / s.posts;
+  const criticalChange = Math.round((criticalShare(last) - criticalShare(prev)) * 100);
   const mood = sentimentSegments(totals.sentiment);
   const maxEmotion = Math.max(...EMOTIONS.map((e) => totals.emotion[e]));
+  const emotionsBySize = [...EMOTIONS].sort((a, b) => totals.emotion[b] - totals.emotion[a]);
+  const topRising = narratives[0];
+  const sparkMax = Math.max(...narratives.flatMap((n) => n.bySnapshot));
+
+  // Three claims from the latest brief that rest on posts, and one post behind each.
+  const findings = (brief?.sections ?? []).flatMap((s) => s.items).filter((i) => i.cites.length > 0).slice(0, 3);
+  const evidence = await getPostsByIds([...new Set(findings.map((f) => f.cites[0]))]);
+  const narrativeTitle = new Map(narratives.map((n) => [n.id, n.title]));
 
   return (
     <div>
       <PageHeader
         title="Overview"
-        meta={
-          <>
-            {topic.name} · {topic.snapshots.length} snapshots, {formatShortDate(first.windowStart)} to{" "}
-            {formatDate(last.collectedAt)} · Times in PKT
-          </>
-        }
+        meta={<span className="tabular">Round {rounds.length} collected {formatDateTime(last.collectedAt)} PKT</span>}
         actions={
-          <Link href="/brief" className="btn">
-            Read the latest brief
+          <Link href="/brief" className="btn btn-primary">
+            Open the brief
           </Link>
         }
       />
 
-      <section className={styles.figures} aria-label="Key figures">
-        <div className={`${styles.figure} ${styles.hero}`}>
-          <p className={styles.figureLabel}>Posts analysed</p>
-          <p className={styles.figureValue}>{formatNumber(totals.posts)}</p>
-          <p className={styles.figureNote}>
-            {PLATFORMS.map((p) => `${PLATFORM_LABEL[p]} ${formatNumber(
-              topic.snapshots.reduce((a, s) => a + s.byPlatform[p], 0),
-            )}`).join(" · ")}
-          </p>
+      <section className={`${styles.pulse} on-forest`} aria-label="Post volume">
+        <div className={styles.pulseHead}>
+          <div>
+            <p className={styles.pulseLabel}>Posts analysed</p>
+            <p className={`${styles.pulseValue} tabular`}>{formatNumber(totals.posts)}</p>
+          </div>
+          <ul className={styles.platforms}>
+            {PLATFORMS.map((p) => (
+              <li key={p}>
+                <PlatformIcon platform={p} size={16} />
+                {PLATFORM_LABEL[p]}
+                <span className="tabular">{formatNumber(rounds.reduce((a, s) => a + s.byPlatform[p], 0))}</span>
+              </li>
+            ))}
+          </ul>
+          <InfoTip topic="this chart">
+            Posts per 6-hour window. Each round holds the posts made since the previous round. Times in PKT.
+          </InfoTip>
         </div>
-        <div className={styles.figure}>
-          <p className={styles.figureLabel}>Critical posts</p>
-          <p className={styles.figureValue}>{formatShare(totals.stance.critical, totals.posts)}</p>
-          <p className={styles.figureNote}>
-            {formatShare(first.byStance.critical, first.posts)} in snapshot 1,{" "}
-            {formatShare(last.byStance.critical, last.posts)} in snapshot {topic.snapshots.length}
-          </p>
-        </div>
-        <div className={styles.figure}>
-          <p className={styles.figureLabel}>Likely sarcastic</p>
-          <p className={styles.figureValue}>{formatShare(totals.sarcasmLikely, totals.posts)}</p>
-          <p className={styles.figureNote}>
-            <Link href={postsHref({ sarcasm: "likely" })}>{formatNumber(totals.sarcasmLikely)} posts</Link>.
-            Least reliable label so far
-          </p>
-        </div>
-        <div className={styles.figure}>
-          <p className={styles.figureLabel}>Waiting for review</p>
-          <p className={styles.figureValue}>{formatNumber(totals.reviewQueue)}</p>
-          <p className={styles.figureNote}>
-            <Link href="/review">Labels below {REVIEW_THRESHOLD.toFixed(2)} confidence</Link>
-          </p>
-        </div>
+        <PulseChart bins={overview.volume} snapshots={rounds} />
       </section>
 
-      <section className={`panel ${styles.block}`} aria-labelledby="volume-title">
-        <div className={styles.blockHead}>
-          <div>
-            <h2 id="volume-title" className="section-title">
-              Posts over time, by stance
-            </h2>
-            <p className="section-note">
-              6-hour windows. Lines S1 to S3 mark when each snapshot was collected; each one holds the
-              posts made since the previous snapshot.
+      <section className={styles.figures} aria-label="Key figures">
+        <div className={`${styles.figure} ${styles.figureWide}`}>
+          <div className={styles.figureText}>
+            <p className="eyebrow">Critical posts</p>
+            <p className={`${styles.figureValue} tabular`}>{formatShare(totals.stance.critical, totals.posts)}</p>
+            <p className={styles.figureNote}>
+              <span className="tabular">
+                {criticalChange >= 0 ? "↑" : "↓"} {Math.abs(criticalChange)} pts
+              </span>{" "}
+              in round {rounds.length}
             </p>
           </div>
-          <Legend segments={stanceSegments(totals.stance)} showValues={false} />
+          <div
+            className={styles.roundBars}
+            role="img"
+            aria-label={`Critical share by round: ${rounds.map((s) => formatShare(s.byStance.critical, s.posts)).join(", ")}`}
+          >
+            {rounds.map((s, i) => (
+              <span key={s.id} className={styles.roundBar}>
+                <span
+                  className={styles.roundBarFill}
+                  data-latest={i === rounds.length - 1 || undefined}
+                  style={{ height: `${Math.round(criticalShare(s) * 80)}px` }}
+                />
+                <span className="tabular">R{i + 1}</span>
+              </span>
+            ))}
+          </div>
         </div>
-        <VolumeChart data={overview.volume} snapshots={topic.snapshots} />
+
+        <div className={styles.figure}>
+          <p className="eyebrow">Likely sarcastic</p>
+          <p className={styles.figureRow}>
+            <span className={`${styles.figureValue} tabular`}>{formatShare(totals.sarcasmLikely, totals.posts)}</span>
+            <Link href={postsHref({ sarcasm: "likely" })} className="tabular">
+              {formatNumber(totals.sarcasmLikely)} posts
+            </Link>
+          </p>
+          <p className={styles.figureNote}>Least reliable label so far</p>
+        </div>
+
+        <Link href="/review" className={`${styles.figure} ${styles.figureLink}`}>
+          <p className="eyebrow">Waiting for review</p>
+          <p className={`${styles.figureValue} tabular`}>{formatNumber(totals.reviewQueue)}</p>
+          <p className={styles.figureNote}>
+            Below <span className="tabular">{REVIEW_THRESHOLD.toFixed(2)}</span> confidence
+          </p>
+        </Link>
+
+        {topRising && (
+          <Link href={`/narratives/${topRising.id}`} className={`${styles.figure} ${styles.figureWide} ${styles.figureLink}`}>
+            <div className={styles.figureText}>
+              <p className={styles.figureRow}>
+                <span className="eyebrow">Fastest growing</span>
+                <TrendTag trend={topRising.trend} />
+              </p>
+              <p className={styles.risingTitle}>{topRising.title}</p>
+              <p className={styles.figureRow}>
+                <span className={`${styles.risingValue} tabular`}>
+                  {topRising.change === null ? "New" : formatChange(topRising.change)}
+                </span>
+                <span className={`${styles.figureNote} tabular`}>
+                  {topRising.bySnapshot.slice(-2).map(formatNumber).join(" → ")} posts
+                </span>
+              </p>
+            </div>
+          </Link>
+        )}
       </section>
 
       <div className={styles.columns}>
         <section className={`panel ${styles.block}`} aria-labelledby="stance-title">
-          <div>
+          <div className={styles.blockHead}>
             <h2 id="stance-title" className="section-title">
               Stance toward the topic
             </h2>
-            <p className="section-note">Select a segment to see its posts.</p>
+            <InfoTip topic="stance">
+              Whether a post supports, criticises or stays neutral on the topic. Select a segment to see its posts.
+            </InfoTip>
           </div>
-          <div className={styles.stack}>
-            <ProportionBar segments={stanceSegments(totals.stance)} size="lg" label="Stance, all posts" />
-            <Legend segments={stanceSegments(totals.stance)} />
-          </div>
+          <ProportionBar segments={stanceSegments(totals.stance)} size="lg" label="Stance, all posts" />
+          <Legend segments={stanceSegments(totals.stance)} />
 
           <div className={styles.rows}>
-            <h3 className={styles.rowsTitle}>By language</h3>
+            <h3 className="eyebrow">Critical share by language and platform</h3>
             {LANGUAGES.map((l) => {
               const counts = overview.stanceByLanguage[l];
               const n = STANCES.reduce((a, s) => a + counts[s], 0);
               return (
                 <div key={l} className={styles.row}>
                   <span className={styles.rowLabel}>{LANGUAGE_LABEL[l]}</span>
-                  <ProportionBar
-                    segments={stanceSegments(counts, { language: l })}
-                    label={`Stance in ${LANGUAGE_LABEL[l]} posts`}
-                  />
-                  <span className={`${styles.rowValue} tabular`}>
-                    {formatShare(counts.critical, n)} critical
+                  <ProportionBar segments={stanceSegments(counts, { language: l })} label={`Stance in ${LANGUAGE_LABEL[l]} posts`} />
+                  <span className={`${styles.rowValue} tabular`} data-high={counts.critical / n > 0.6 || undefined}>
+                    {formatShare(counts.critical, n)}
                   </span>
                 </div>
               );
             })}
-          </div>
-
-          <div className={styles.rows}>
-            <h3 className={styles.rowsTitle}>By platform</h3>
             {PLATFORMS.map((p) => {
               const counts = overview.stanceByPlatform[p];
               const n = STANCES.reduce((a, s) => a + counts[s], 0);
               return (
                 <div key={p} className={styles.row}>
                   <span className={styles.rowLabel}>{PLATFORM_LABEL[p]}</span>
-                  <ProportionBar
-                    segments={stanceSegments(counts, { platform: p })}
-                    label={`Stance on ${PLATFORM_LABEL[p]}`}
-                  />
-                  <span className={`${styles.rowValue} tabular`}>
-                    {formatShare(counts.critical, n)} critical
+                  <ProportionBar segments={stanceSegments(counts, { platform: p })} label={`Stance on ${PLATFORM_LABEL[p]}`} />
+                  <span className={`${styles.rowValue} tabular`} data-high={counts.critical / n > 0.6 || undefined}>
+                    {formatShare(counts.critical, n)}
                   </span>
                 </div>
               );
@@ -156,33 +208,29 @@ export default async function OverviewPage() {
         </section>
 
         <section className={`panel ${styles.block}`} aria-labelledby="mood-title">
-          <div>
+          <div className={styles.blockHead}>
             <h2 id="mood-title" className="section-title">
-              Mood
+              Mood and emotion
             </h2>
-            <p className="section-note">How posts feel, separate from where they stand.</p>
+            <InfoTip topic="mood">How posts feel, separate from where they stand on the topic.</InfoTip>
           </div>
-          <div className={styles.stack}>
-            <ProportionBar segments={mood} size="lg" label="Mood, all posts" />
-            <Legend segments={mood} />
-          </div>
+          <ProportionBar segments={mood} size="lg" label="Mood, all posts" />
+          <Legend segments={mood} />
 
           <div className={styles.rows}>
-            <h3 className={styles.rowsTitle}>Main emotion</h3>
+            <h3 className="eyebrow">Main emotion</h3>
             <ul className={styles.emotions}>
-              {EMOTIONS.map((e) => (
+              {emotionsBySize.map((e) => (
                 <li key={e}>
                   <Link href={postsHref({ emotion: e })} className={styles.emotion}>
                     <span className={styles.rowLabel}>{EMOTION_LABEL[e]}</span>
                     <span className={styles.emotionTrack}>
                       <span
                         className={styles.emotionBar}
-                        style={{ width: `${(totals.emotion[e] / maxEmotion) * 100}%` }}
+                        style={{ width: `${(totals.emotion[e] / maxEmotion) * 100}%`, background: `var(${EMOTION_TOKEN[e]})` }}
                       />
                     </span>
-                    <span className={`${styles.rowValue} tabular`}>
-                      {formatNumber(totals.emotion[e])}
-                    </span>
+                    <span className={`${styles.rowValue} tabular`}>{formatNumber(totals.emotion[e])}</span>
                   </Link>
                 </li>
               ))}
@@ -193,76 +241,85 @@ export default async function OverviewPage() {
 
       <section className={`panel ${styles.block}`} aria-labelledby="narratives-title">
         <div className={styles.blockHead}>
-          <div>
-            <h2 id="narratives-title" className="section-title">
-              Largest narratives
-            </h2>
-            <p className="section-note">Change compares the last two snapshots.</p>
-          </div>
+          <h2 id="narratives-title" className="section-title">
+            Narratives to watch
+          </h2>
+          <span className={styles.headNote}>Change: round {rounds.length - 1} to round {rounds.length}</span>
           <Link href="/narratives" className="link-arrow">
-            All narratives
+            All narratives →
           </Link>
         </div>
         <div className={styles.tableScroll}>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th scope="col">Narrative</th>
-                <th scope="col" className={styles.num}>
-                  Posts
-                </th>
-                <th scope="col" className={styles.num}>
-                  Change
-                </th>
-                <th scope="col" className={styles.mixCol}>
-                  Stance mix
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {narratives.slice(0, 5).map((n) => (
-                <tr key={n.id}>
-                  <td>
-                    <Link href={`/narratives/${n.id}`} className={styles.narrativeLink}>
-                      {n.title}
-                    </Link>
-                    {(n.trend === "emerging" || n.trend === "growing") && <TrendTag trend={n.trend} />}
-                  </td>
-                  <td className={`${styles.num} tabular`}>{formatNumber(n.posts)}</td>
-                  <td className={`${styles.num} tabular`}>{n.change === null ? "New" : formatChange(n.change)}</td>
-                  <td className={styles.mixCol}>
+          <ul className={styles.narratives}>
+            {narratives.slice(0, 6).map((n) => (
+              <li key={n.id}>
+                <Link href={`/narratives/${n.id}`} className={styles.narrative}>
+                  <span className={styles.narrativeTitle}>
+                    {n.title}
+                    {n.trend !== "steady" && <TrendTag trend={n.trend} />}
+                  </span>
+                  <Sparkline values={n.bySnapshot} max={sparkMax} label={`Posts per round: ${n.bySnapshot.join(", ")}`} />
+                  <span className={`${styles.narrativeCount} tabular`}>{formatNumber(n.posts)}</span>
+                  <span className={`${styles.narrativeChange} tabular`}>
+                    {n.change === null ? "New" : formatChange(n.change)}
+                  </span>
+                  <span className={styles.narrativeMix}>
+                    {/* The whole row is a link, so the bar inside must not hold links of its own. */}
                     <ProportionBar
-                      segments={stanceSegments(n.stance, { narrative: n.id })}
+                      segments={stanceSegments(n.stance).map(({ href: _href, ...s }) => s)}
                       size="sm"
                       label={`Stance in ${n.title}`}
                     />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 
-      {brief && (
-        <section className={`panel ${styles.block} ${styles.brief}`} aria-labelledby="brief-title">
-          <div className={styles.blockHead}>
-            <div>
-              <h2 id="brief-title" className="section-title">
-                From the latest brief
+      {brief && findings.length > 0 && (
+        <div className={styles.evidence}>
+          <section className={`panel ${styles.block}`} aria-labelledby="findings-title">
+            <div className={styles.blockHead}>
+              <h2 id="findings-title" className="section-title">
+                Three things to know
               </h2>
-              <p className="section-note">{formatDate(brief.date)}. Drafted by AI, linked to source posts.</p>
+              <Link href={`/brief?id=${brief.id}`} className="link-arrow">
+                Full brief →
+              </Link>
             </div>
-            <Link href={`/brief?id=${brief.id}`} className="link-arrow">
-              Read the full brief
-            </Link>
-          </div>
-          <div className={styles.briefText}>
-            {brief.sections[0].items.map((item) => (
-              <p key={item.text}>{item.text}</p>
-            ))}
-          </div>
-        </section>
+            <ol className={styles.findings}>
+              {findings.map((f, i) => (
+                <li key={f.text} className={styles.finding}>
+                  <span className={`${styles.findingNumber} tabular`}>{i + 1}</span>
+                  <div className={styles.findingBody}>
+                    <p>{f.text}</p>
+                    <Link href={`/brief?id=${brief.id}`} className={styles.findingSources}>
+                      <span className="tabular">{f.cites.length}</span> source {f.cites.length === 1 ? "post" : "posts"}
+                    </Link>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </section>
+
+          <section className={`panel ${styles.block}`} aria-labelledby="evidence-title">
+            <div className={styles.blockHead}>
+              <h2 id="evidence-title" className="section-title">
+                Posts behind the change
+              </h2>
+              <Link href="/posts" className="link-arrow">
+                All posts →
+              </Link>
+            </div>
+            <div className={styles.evidencePosts}>
+              {evidence.map((p) => (
+                <PostCard key={p.id} post={p} narrativeTitle={p.narrativeId ? narrativeTitle.get(p.narrativeId) ?? null : null} />
+              ))}
+            </div>
+          </section>
+        </div>
       )}
     </div>
   );

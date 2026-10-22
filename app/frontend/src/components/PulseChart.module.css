@@ -1,0 +1,50 @@
+.figure {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: 150px;
+}
+
+.base,
+.boundary {
+  stroke: var(--on-forest-rule);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.boundary {
+  stroke-dasharray: 3 4;
+}
+
+.area {
+  fill: rgb(237 228 211 / 0.08);
+}
+
+.line {
+  fill: none;
+  stroke: var(--on-forest);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.rounds {
+  display: flex;
+  color: var(--on-forest-muted);
+  font-size: 12px;
+}
+
+.rounds > span {
+  flex-basis: 0;
+}
+
+.rounds :global(.tabular) {
+  margin-left: 6px;
+  color: var(--on-forest-soft);
+}
