@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { PlatformIcon } from "@/components/PlatformIcon";
 import { formatDateTime, formatNumber } from "@/lib/format";
 import { ACCOUNT_CATEGORY_LABEL, LANGUAGE_LABEL, LANGUAGES, PLATFORM_LABEL, PLATFORMS } from "@/lib/labels";
 import type { KeyAccount, Language, Platform, Topic } from "@/lib/types";
@@ -143,8 +144,8 @@ export function TopicForm({ topic }: { topic: Topic }) {
             <h2 id="keywords-title" className="section-title">
               Keywords
             </h2>
-            <p className="section-note tabular">
-              {keywordCount} keywords. The prototype plan is about 10.
+            <p className="section-note">
+              <span className="tabular">{keywordCount}</span> keywords. The prototype plan is about 10.
             </p>
           </div>
           <div className={styles.keywordGrid}>
@@ -187,7 +188,12 @@ export function TopicForm({ topic }: { topic: Topic }) {
               <tbody>
                 {accounts.map((a) => (
                   <tr key={`${a.platform}${a.handle}`}>
-                    <td>{PLATFORM_LABEL[a.platform]}</td>
+                    <td>
+                      <span className={styles.platform}>
+                        <PlatformIcon platform={a.platform} />
+                        {PLATFORM_LABEL[a.platform]}
+                      </span>
+                    </td>
                     <td className={styles.handle}>{a.handle}</td>
                     <td>{ACCOUNT_CATEGORY_LABEL[a.category]}</td>
                     <td className={styles.rowAction}>

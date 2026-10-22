@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { InfoTip } from "@/components/InfoTip";
 import { PageHeader } from "@/components/PageHeader";
 import { getOverview, getReviewQueue } from "@/lib/api";
 import { REVIEW_THRESHOLD } from "@/lib/config";
@@ -18,10 +19,15 @@ export default async function ReviewPage({ searchParams }: { searchParams: Promi
         title="Review queue"
         meta={
           <>
-            {formatNumber(overview.totals.reviewQueue)} posts have a label below{" "}
-            {REVIEW_THRESHOLD.toFixed(2)} confidence. Your corrections become the test set for measuring
-            accuracy. The threshold is a placeholder until it is agreed.
+            <span className="tabular">{formatNumber(overview.totals.reviewQueue)}</span> posts have a label below{" "}
+            <span className="tabular">{REVIEW_THRESHOLD.toFixed(2)}</span> confidence.
           </>
+        }
+        actions={
+          <InfoTip topic="the review queue">
+            Your corrections become the test set for measuring accuracy. The 0.60 threshold is a placeholder
+            until it is agreed.
+          </InfoTip>
         }
       />
       <ReviewQueue posts={queue} initialId={post} />
