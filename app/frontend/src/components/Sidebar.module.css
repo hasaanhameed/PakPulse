@@ -1,26 +1,27 @@
-/* The sidebar is the one Forest night surface; everything on it uses the on-forest tokens. */
+/* The Forest night frame: the sidebar is one of the two dark surfaces (the other is the overview's pulse band).
+   Everything on it uses the on-forest tokens. */
 .sidebar {
   position: sticky;
   top: 0;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 28px;
   height: 100vh;
-  padding: 24px 16px 20px;
+  padding: 22px 14px 18px;
   background: var(--forest);
-  color: var(--on-forest);
+  color: var(--on-forest-soft);
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   width: fit-content;
-  padding: 0 8px 0 4px;
+  padding: 0 8px 0 6px;
   color: var(--on-forest);
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   text-decoration: none;
 }
 
@@ -28,30 +29,6 @@
   flex: none;
   width: 30px;
   height: 30px;
-}
-
-.topic {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  margin-top: 20px;
-  padding: 12px 8px 0;
-  border-top: 1px solid var(--pine);
-}
-
-.topicLabel {
-  color: var(--on-forest-muted);
-  font-size: 12px;
-}
-
-.topicName {
-  font-weight: 600;
-}
-
-.topicMeta {
-  color: var(--on-forest-muted);
-  font-size: 12px;
-  line-height: 1.5;
 }
 
 .nav ul {
@@ -63,24 +40,28 @@
 .navLink {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 7px 8px;
+  gap: 12px;
+  height: 40px;
+  padding: 0 10px;
   border-radius: var(--radius);
-  color: var(--on-forest-muted);
+  color: var(--on-forest-soft);
   font-size: 14px;
   font-weight: 500;
   text-decoration: none;
 }
 
-/* Hovered and current items sit on Linen, like a tab cut out of the page. */
-.navLink:hover,
-.navLink[aria-current="page"] {
-  color: var(--forest);
-  background: var(--linen);
+.navLabel {
+  flex-grow: 1;
+}
+
+.navLink:hover {
+  background: var(--on-forest-hover);
+  color: var(--on-forest);
 }
 
 .navLink[aria-current="page"] {
+  background: var(--on-forest-active);
+  color: var(--on-forest);
   font-weight: 600;
 }
 
@@ -91,17 +72,41 @@
 .count {
   min-width: 28px;
   padding: 0 6px;
-  border: 1px solid var(--moss);
+  border: 1px solid var(--on-forest-rule);
   border-radius: var(--radius-sm);
   color: var(--on-forest);
   font-size: 12px;
   text-align: center;
 }
 
-.navLink:hover .count,
-.navLink[aria-current="page"] .count {
-  border-color: var(--pine);
-  color: var(--forest);
+.topic {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: auto;
+  padding: 14px 12px;
+  border: 1px solid var(--on-forest-rule);
+  border-radius: var(--radius-lg);
+}
+
+.topicLabel {
+  margin-bottom: 2px;
+  color: var(--on-forest-muted);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.topicName {
+  color: var(--on-forest);
+  font-weight: 600;
+}
+
+.topicMeta {
+  color: var(--on-forest-muted);
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 @media (max-width: 900px) {
@@ -112,16 +117,9 @@
     padding: 14px 16px 0;
   }
 
-  .top {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 12px;
-  }
-
   .brand {
     padding: 0;
-    font-size: 19px;
+    font-size: 17px;
   }
 
   .mark {
@@ -130,14 +128,6 @@
   }
 
   .topic {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    text-align: right;
-  }
-
-  .topicLabel,
-  .topicMeta {
     display: none;
   }
 
@@ -154,6 +144,7 @@
   }
 
   .navLink {
+    height: 36px;
     white-space: nowrap;
   }
 }

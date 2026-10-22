@@ -5,15 +5,16 @@ import { usePathname } from "next/navigation";
 
 import { formatDateTime, formatNumber } from "@/lib/format";
 import { LogoMark } from "./LogoMark";
+import { NavIcon, type NavIconName } from "./NavIcon";
 import styles from "./Sidebar.module.css";
 
-const NAV = [
-  { href: "/", label: "Overview" },
-  { href: "/narratives", label: "Narratives" },
-  { href: "/posts", label: "Posts" },
-  { href: "/brief", label: "Daily brief" },
-  { href: "/review", label: "Review queue", countKey: "review" as const },
-  { href: "/topic", label: "Topic setup" },
+const NAV: { href: string; label: string; icon: NavIconName; countKey?: "review" }[] = [
+  { href: "/", label: "Overview", icon: "overview" },
+  { href: "/narratives", label: "Narratives", icon: "narratives" },
+  { href: "/posts", label: "Posts", icon: "posts" },
+  { href: "/brief", label: "Daily brief", icon: "brief" },
+  { href: "/review", label: "Review queue", icon: "review", countKey: "review" },
+  { href: "/topic", label: "Topic setup", icon: "topic" },
 ];
 
 interface SidebarProps {
@@ -30,22 +31,10 @@ export function Sidebar({ topicName, snapshotCount, postCount, lastCollectedAt, 
 
   return (
     <aside className={styles.sidebar}>
-      <div className={styles.top}>
-        <Link href="/" className={styles.brand}>
-          <LogoMark className={styles.mark} />
-          <span>PakPulse</span>
-        </Link>
-
-        <div className={styles.topic}>
-          <span className={styles.topicLabel}>Topic</span>
-          <span className={styles.topicName}>{topicName}</span>
-          <span className={styles.topicMeta}>
-            {snapshotCount} snapshots, {formatNumber(postCount)} posts
-            <br />
-            Last collected {formatDateTime(lastCollectedAt)}
-          </span>
-        </div>
-      </div>
+      <Link href="/" className={styles.brand}>
+        <LogoMark className={styles.mark} />
+        <span>PakPulse</span>
+      </Link>
 
       <nav aria-label="Main" className={styles.nav}>
         <ul>
@@ -56,7 +45,8 @@ export function Sidebar({ topicName, snapshotCount, postCount, lastCollectedAt, 
                 className={styles.navLink}
                 aria-current={isActive(item.href) ? "page" : undefined}
               >
-                <span>{item.label}</span>
+                <NavIcon name={item.icon} />
+                <span className={styles.navLabel}>{item.label}</span>
                 {item.countKey === "review" && (
                   <span className={`${styles.count} tabular`} aria-label={`${reviewCount} waiting`}>
                     {formatNumber(reviewCount)}
@@ -67,6 +57,15 @@ export function Sidebar({ topicName, snapshotCount, postCount, lastCollectedAt, 
           ))}
         </ul>
       </nav>
+
+      <div className={styles.topic}>
+        <span className={styles.topicLabel}>Topic</span>
+        <span className={styles.topicName}>{topicName}</span>
+        <span className={`${styles.topicMeta} tabular`}>
+          {snapshotCount} rounds · {formatNumber(postCount)} posts
+        </span>
+        <span className={`${styles.topicMeta} tabular`}>Last collected {formatDateTime(lastCollectedAt)}</span>
+      </div>
     </aside>
   );
 }
