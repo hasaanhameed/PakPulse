@@ -61,6 +61,7 @@ Both developers are **learning ASP.NET Core and Next.js** on this project. Help 
 - **Types:** `feat` (new feature), `fix` (bug fix), `docs` (documentation only), `style` (formatting or CSS with no behaviour change), `refactor` (restructure with no behaviour change), `perf`, `test`, `build` (dependencies, build config), `chore` (housekeeping).
 - **Scopes:** the area touched, e.g. `frontend`, `backend`, `nlp`, `docs`.
 - **One line only.** A short summary in the imperative, lower case, no full stop, no body. Example: `feat(frontend): add review queue screen`.
+- **No trailers.** Never add `Co-Authored-By` or any other attribution line to commits or pull requests.
 - **Group by related change.** Each commit holds one logical change and only the files that belong to it. Split unrelated work into separate commits, e.g. the dashboard screens, the logo and the doc updates are three commits, not one.
 
 ## Ethical boundary
