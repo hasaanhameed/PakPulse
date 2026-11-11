@@ -2,6 +2,8 @@
 
 > **Purpose:** Design and UI guidance for the Next.js dashboard.
 
+> **Status: prototype, not the final design.** The current screens, components and look were built for demos and are not final. Expect many components to be updated or removed as the project moves on. Treat this guide as a record of the current prototype, not a fixed spec.
+
 **Related docs:** [Root guide](../../CLAUDE.md) · [Architecture](../../docs/ARCHITECTURE.md) · [Flow](../../docs/FLOW.md) · [Decisions](../../docs/DECISIONS.md) · [Progress](../../docs/PROGRESS.md) · [Backend guide](../backend/CLAUDE.md)
 
 ---
