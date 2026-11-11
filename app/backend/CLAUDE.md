@@ -62,6 +62,17 @@ These follow the milestones in [Progress](../../docs/PROGRESS.md#prototype-miles
 3. Cleaning + language tagging.
 4. Hand-off to labelling, embeddings and narratives, then the endpoints the dashboard needs.
 
+## Project layout
+
+```
+app/backend/
+├── PakPulse.slnx              ← solution: groups the projects
+└── src/
+    └── PakPulse.Core/         ← entities (one per table) and enums (one per allowed-values list); no packages
+```
+
+`PakPulse.Infrastructure` (database code) and `PakPulse.Api` (endpoints) come next. Core depends on nothing; Infrastructure uses Core; Api uses both.
+
 ## API endpoints
 
 **TBD.** Do not invent endpoints. Agree them with Shahab, then list them here.
@@ -73,6 +84,16 @@ The tables already exist in Supabase. What each one holds, the allowed values an
 - **The SQL scripts in [app/database/migrations/](../database/migrations/) are the master copy** ([D-021](../../docs/DECISIONS.md#d-021-database-first-sql-scripts-are-the-master-copy)). Write C# models to match the tables. Do not create or alter tables from EF Core.
 - A schema change is a new numbered SQL script, then a matching model change, in the same commit.
 - Map to the `pakpulse` schema with snake_case names. Allowed values (stance, language, emotion…) are stored as lowercase text, e.g. `roman_ur`, `off_topic`.
+- **All `DateTime` values are UTC.** Use `DateTime.UtcNow`. Npgsql refuses non-UTC values for `timestamptz` columns.
+
+**To handle when writing the Infrastructure mapping** (from the review of Core, 2026-11-11):
+- Keys EF can't guess: `PostMetric` (PostId + CollectionRoundId), `NarrativePost` (NarrativeId + PostId), `BriefCitation` (BriefId + PostId), `PostEmbedding` (PostId).
+- Enums need a converter to snake_case text (`RomanUr` → `roman_ur`). `HasConversion<string>()` alone writes `RomanUr`.
+- Columns with a `now()` default (`created_at` etc.) need `HasDefaultValueSql("now()")`, or code must set them. Nothing updates `updated_at` automatically.
+- Don't add `HasDefaultValue(true)` for `IsActive` / `IsCurrent`: an explicit `false` would be saved as `true`. The C# initial values already cover the default.
+- `PostEmbedding.Embedding` is `float[]` in Core; map it to `vector` with a converter to `Pgvector.Vector`.
+- `RawPost.Payload` → `jsonb`; the decimals in `SpendEntry` need precision (10,4) and (8,2).
+- Mirror each foreign key's `on delete` rule. `pipeline_runs.topic_id` is optional but cascades, so set `DeleteBehavior.Cascade` explicitly.
 
 ## Secrets and connection
 
