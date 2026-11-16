@@ -18,6 +18,13 @@ Research is complete, the architecture is proposed and documentation is in progr
 
 Newest first. One entry per round of work: what changed and where to read about it.
 
+### 2026-11-16: Backend Api layer and first database connection (Rohail)
+
+- **What:** added `PakPulse.Api` (an empty ASP.NET Core web project) with `GET /health/db`. `Program.cs` reads the connection string from user secrets, calls `AddInfrastructure()` and checks the connection with `CanConnectAsync()`.
+- **Checked:** `/health/db` returns "Database connection OK" against the real Supabase database. This is the first time the backend has connected.
+- **Found:** the Supabase project had paused itself (free projects pause after 7 days without use). The error was `tenant/user ... not found`. Restoring the project in the Supabase dashboard fixed it.
+- **Not done yet:** the save-and-read smoke test from Hasaan's handover (save a Topic and TopicKeyword, check `roman_ur` and `created_at`, then delete them).
+
 ### 2026-11-16: Backend Infrastructure layer (Hasaan)
 
 - **What:** added `PakPulse.Infrastructure`: the `DbContext`, one configuration per table, a snake_case enum converter and `AddInfrastructure()` for the Api to call. Packages: Npgsql EF Core provider, EFCore.NamingConventions, Pgvector.EntityFrameworkCore.
