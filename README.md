@@ -69,4 +69,4 @@ The dashboard talks to the backend API. The backend runs the collectors, stores 
 
 ## Owner
 
-**InfinityX Digital LTD**, London. Lead: Shahab Najmi.
+**InfinityX Digital LTD**, London. Team: Rohail and Hasaan.
