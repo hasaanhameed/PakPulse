@@ -10,7 +10,7 @@
 
 - [ ] Read the [Root guide](../../CLAUDE.md), [Architecture](../../docs/ARCHITECTURE.md), [Decisions](../../docs/DECISIONS.md) and [Flow](../../docs/FLOW.md).
 - [ ] Check [Progress](../../docs/PROGRESS.md) for the current milestone and open questions.
-- [ ] **If anything is unclear, ask Shahab.** Do not guess on scope, cost, data sources or architecture.
+- [ ] **If anything is unclear, ask Rohail or Hasaan.** Do not guess on scope, cost, data sources or architecture.
 
 ## Scope
 
@@ -31,7 +31,7 @@ NLP work (labelling, embeddings, narratives, brief) is planned for a separate Py
 | Database | PostgreSQL + pgvector on Supabase, schema `pakpulse` ([D-011](../../docs/DECISIONS.md#d-011-single-postgresql-database-with-pgvector), [D-020](../../docs/DECISIONS.md#d-020-host-the-prototype-database-on-supabase)) |
 | Scheduling | Hangfire (prototype: manual "Collect now" trigger) |
 | Local run | Runs on the developer's laptop ([D-017](../../docs/DECISIONS.md#d-017-run-locally-with-docker-compose)); connects to Supabase |
-| Auth | **TBD — to confirm with Shahab** |
+| Auth | **TBD — to confirm with the team** |
 
 ## Responsibilities
 
@@ -47,7 +47,7 @@ NLP work (labelling, embeddings, narratives, brief) is planned for a separate Py
 - **Never scrape platforms directly** or bypass platform blocking ([D-001](../../docs/DECISIONS.md#d-001-do-not-build-our-own-scrapers)).
 - **Deduplicate by platform + post ID.** Never analyse a post twice ([D-016](../../docs/DECISIONS.md#d-016-never-analyse-the-same-post-twice)).
 - **Store raw responses as JSONB, untouched.** Cleaning writes to separate records.
-- **Spending caps:** respect the cap on every paid service. Never add a paid service or raise spending without Shahab's approval.
+- **Spending caps:** respect the cap on every paid service. Never add a paid service or raise spending without approval from Rohail or Hasaan.
 - **Secrets:** use .NET user secrets (or environment variables) only. Never put them in code or committed config. See [Secrets and connection](#secrets-and-connection).
 - **Test on ~100 posts** before any full collection run.
 - **Aggregate analysis only.** No features that track or profile individuals ([Architecture → Ethical boundary](../../docs/ARCHITECTURE.md#ethical-boundary)).
@@ -76,7 +76,7 @@ app/backend/
 
 ## API endpoints
 
-**TBD.** Do not invent endpoints. Agree them with Shahab, then list them here.
+**TBD.** Do not invent endpoints. Agree them as a team, then list them here.
 
 ## Database schema
 
