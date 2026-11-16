@@ -8,11 +8,11 @@
 
 ## Current status
 
-**Phase:** Prototype / proof of concept (last updated 2026-10-22)
+**Phase:** Prototype / proof of concept (last updated 2026-11-16)
 
-Research is complete, the architecture is proposed and documentation is in progress. **A first version of the dashboard exists, running on mock data** ([Frontend design](../app/frontend/DESIGN.md#mock-data)). **The database is set up on Supabase** (16 tables, empty; see [Database](DATABASE.md)). There is no backend, collection or NLP code yet.
+Research is complete and the architecture is proposed. **A first version of the dashboard exists, running on mock data** ([Frontend design](../app/frontend/DESIGN.md#mock-data)). **The database is set up on Supabase** (16 tables, empty; see [Database](DATABASE.md)). **The backend has its Core, Infrastructure and Api layers and connects to Supabase** ([Backend guide](../app/backend/CLAUDE.md#project-layout)). There is no collection or NLP code yet, and the dashboard is not yet connected to the backend.
 
-**Next up: the backend data layer** (.NET project, models matching the tables, connection test). Background: [PHASE1_DATABASE_PLAN.md](PHASE1_DATABASE_PLAN.md), partly superseded by [D-021](DECISIONS.md#d-021-database-first-sql-scripts-are-the-master-copy).
+**Next up:** the save-and-read smoke test, then the first collector (X). Before the collector, choose the X provider and set its spending cap (open questions 3 and 6).
 
 ## Update log
 
