@@ -18,7 +18,7 @@ public class PostEmbeddingConfiguration : IEntityTypeConfiguration<PostEmbedding
             .WithOne(p => p.Embedding)
             .HasForeignKey<PostEmbedding>(e => e.PostId);
 
-        // Core keeps a plain float[]; pgvector needs its own Vector type in the database.
+        // Core keeps a plain float[]; the Pgvector library sends it to the database's vector column as its own Vector type.
         // The comparer tells EF to compare the numbers, not just whether it is the same array.
         builder.Property(e => e.Embedding)
             .HasColumnType("vector")
@@ -26,7 +26,7 @@ public class PostEmbeddingConfiguration : IEntityTypeConfiguration<PostEmbedding
                 values => new Vector(values),
                 vector => vector.ToArray(),
                 new ValueComparer<float[]>(
-                    (a, b) => a!.SequenceEqual(b!),
+                    (a, b) => a.SequenceEqual(b),
                     a => a.Aggregate(0, (hash, value) => HashCode.Combine(hash, value)),
                     a => a.ToArray()));
 

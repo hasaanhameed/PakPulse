@@ -44,13 +44,16 @@ public class PakPulseDbContext(DbContextOptions<PakPulseDbContext> options) : Db
     {
         modelBuilder.HasDefaultSchema("pakpulse");
 
-        // Picks up every IEntityTypeConfiguration class in Data/Configurations.
+        // Picks up every IEntityTypeConfiguration class in this project (they live in Data/Configurations).
+        // Note: HasDefaultValueSql("now()") in those files is needed, not just documentation.
+        // It makes EF leave the column out of an insert while it is unset, so the database fills in now().
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(PakPulseDbContext).Assembly);
     }
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         // Every enum is stored as snake_case text, e.g. Stance.OffTopic -> "off_topic".
+        // Add every new enum here, or EF will try to save it as a number.
         configurationBuilder.Properties<Platform>().HaveConversion<SnakeCaseEnumConverter<Platform>>();
         configurationBuilder.Properties<Language>().HaveConversion<SnakeCaseEnumConverter<Language>>();
         configurationBuilder.Properties<AccountCategory>().HaveConversion<SnakeCaseEnumConverter<AccountCategory>>();
@@ -81,6 +84,7 @@ public class PakPulseDbContext(DbContextOptions<PakPulseDbContext> options) : Db
     }
 
     // The database has no trigger for updated_at, so set it here on every edit.
+    // Bulk ExecuteUpdate calls skip SaveChanges, so they must set UpdatedAt themselves.
     private void SetUpdatedAt()
     {
         var now = DateTime.UtcNow;
