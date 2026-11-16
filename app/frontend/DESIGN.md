@@ -32,7 +32,7 @@ The dashboard is for **PR analysts** who need to understand quickly and reliably
 
 ## Look and feel: the Forest frame
 
-Chosen by Shahab on 2026-10-22 from three light mock-ups (A: Linen refined, **B: Forest frame**, C: Paper with waffle charts). The goal: livelier and easier to scan than the first version, while still looking like a serious tool for analysts rather than an AI-generated template. Decision: [D-022](../../docs/DECISIONS.md#d-022-dashboard-look-the-forest-frame).
+Chosen by Rohail on 2026-10-22 from three light mock-ups (A: Linen refined, **B: Forest frame**, C: Paper with waffle charts). The goal: livelier and easier to scan than the first version, while still looking like a serious tool for analysts rather than an AI-generated template. Decision: [D-022](../../docs/DECISIONS.md#d-022-dashboard-look-the-forest-frame).
 
 - **One light theme with a dark green frame.** Linen pages and Card panels, framed by two Forest night surfaces: the **sidebar** and the overview's **pulse band**. Nothing else is dark.
 - **No dark mode.** A full dark "monitoring console" version was tried on 2026-10-22 and rejected because it looked AI-generated. Do not reintroduce it.
@@ -151,7 +151,7 @@ The mark is a single line: a heartbeat runs in from the left and becomes the P. 
 | Charts | Hand-drawn SVG and CSS bars (pulse line, sparklines, proportion bars, round columns). No chart library: Recharts was removed on 2026-10-22 ([D-022](../../docs/DECISIONS.md#d-022-dashboard-look-the-forest-frame)) |
 | Styling / component library | CSS Modules plus CSS variables. No component library ([D-019](../../docs/DECISIONS.md#d-019-frontend-stack-app-router-css-modules-recharts)) |
 | Fonts | IBM Plex Sans (interface), IBM Plex Mono (numbers, times and scores), Noto Nastaliq Urdu (Urdu script). No serif |
-| Auth / login | **TBD — to confirm with Shahab** |
+| Auth / login | **TBD — to confirm with the team** |
 
 ## Running locally
 
