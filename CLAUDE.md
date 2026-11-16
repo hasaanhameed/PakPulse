@@ -15,7 +15,7 @@ PakPulse is a social media listening and analysis system built by **InfinityX Di
 - **Prototype / proof of concept** for demos.
 - **Budget:** ~Rs 2,000 in total (one-off) for data and AI. It runs locally on a laptop with no hosting cost.
 - One topic, ~6,000 posts collected in 2–3 collection rounds. **Collect once, save, and reuse the data for every demo.**
-- **Dashboard prototype exists on mock data** ([Frontend design](app/frontend/DESIGN.md#mock-data)). **Database set up on Supabase** ([Database](docs/DATABASE.md)). No backend, collector or NLP code yet. Do not write code unless asked.
+- **Dashboard prototype exists on mock data** ([Frontend design](app/frontend/DESIGN.md#mock-data)). **Database set up on Supabase** ([Database](docs/DATABASE.md)). **Backend connects to Supabase** (Core, Infrastructure and Api layers; [Backend guide](app/backend/CLAUDE.md)). No collector or NLP code yet. Do not write code unless asked.
 - Status and milestones: [Progress](docs/PROGRESS.md).
 
 ## Documentation map
