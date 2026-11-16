@@ -69,10 +69,11 @@ app/backend/
 ├── PakPulse.slnx              ← solution: groups the projects
 └── src/
     ├── PakPulse.Core/            ← entities (one per table) and enums (one per allowed-values list); no packages
-    └── PakPulse.Infrastructure/  ← database access: DbContext, one configuration per table, enum converter
+    ├── PakPulse.Infrastructure/  ← database access: DbContext, one configuration per table, enum converter
+    └── PakPulse.Api/             ← the app you run: Program.cs (startup + endpoints); reads the connection string from user secrets
 ```
 
-`PakPulse.Api` (endpoints) comes next. Core depends on nothing; Infrastructure uses Core; Api uses both.
+Core depends on nothing; Infrastructure uses Core; Api uses both. Run it with `dotnet run --project src/PakPulse.Api` from `app/backend`. `GET /health/db` checks the database connection.
 
 ## API endpoints
 
