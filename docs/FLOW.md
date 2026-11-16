@@ -87,6 +87,6 @@ This is high level only. **Detailed behaviour is TBD.**
 |---|---|
 | Scraping service down or erroring | Stop that source's run, keep data already saved, and report the failure on the dashboard. Other sources continue. Switching provider is a single-class change ([D-015](DECISIONS.md#d-015-common-interface-for-every-data-source)). |
 | Quota hit (e.g. Threads ~500 queries / 7 days) | Stop querying that source and use the fallback in [D-003](DECISIONS.md#d-003-use-the-official-threads-api-for-threads) if approved. |
-| Spending cap reached | Stop paid calls immediately. Never raise a cap without Shahab's approval. |
+| Spending cap reached | Stop paid calls immediately. Never raise a cap without approval from Rohail or Hasaan. |
 | LLM returns invalid JSON | Retry the batch. Details TBD. |
 | Post already analysed | Skip it ([D-016](DECISIONS.md#d-016-never-analyse-the-same-post-twice)). |
