@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/PakPulse.Core/PakPulse.Core.csproj" />
+    <Project Path="src/PakPulse.Infrastructure/PakPulse.Infrastructure.csproj" />
   </Folder>
 </Solution>
