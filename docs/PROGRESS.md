@@ -81,7 +81,7 @@ Newest first. One entry per round of work: what changed and where to read about 
 - [ ] 1. Confirm the [open questions](#open-questions).
 - [ ] 2. Choose the demo topic, ~10 keywords (English / Urdu / Roman Urdu) and key accounts.
 - [ ] 3. Set up accounts and spending caps (Apify / twitterapi.io, Threads API app, LLM provider).
-- [ ] 4. Repo scaffolding: database *done (Supabase, 2026-10-20)*; backend Core layer *done (2026-11-11)*, Infrastructure *done (2026-11-16)*, Api next; NLP service depends on [D-010](DECISIONS.md#d-010-add-a-python-nlp-service).
+- [ ] 4. Repo scaffolding: database *done (Supabase, 2026-10-20)*; backend Core layer *done (2026-11-11)*, Infrastructure *done (2026-11-16)*, Api with database health check *done (2026-11-16)*; NLP service depends on [D-010](DECISIONS.md#d-010-add-a-python-nlp-service).
 - [ ] 5. Collectors (X first, then Instagram, then Threads), each tested on 100 posts.
 - [ ] 6. Cleaning + language tagging.
 - [ ] 7. LLM labelling (mood, stance, sarcasm + confidence).
