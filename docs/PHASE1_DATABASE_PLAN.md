@@ -11,10 +11,10 @@
 We're building the backend in stages, starting with the database. This phase delivers four things:
 - the **table design** for everything PakPulse stores (scraped data through to narratives and briefs)
 - the **.NET code** that reads and writes it
-- **step-by-step Supabase setup** for Shahab
+- **step-by-step Supabase setup** for Rohail
 - doc updates
 
-We build it all here, and Shahab's partner takes it over later, so the code and docs must hand over cleanly.
+We build it all here, and Hasaan takes it over later, so the code and docs must hand over cleanly.
 
 This changes earlier docs. The database moves from a local Docker Postgres (D-017) to **Supabase** (hosted Postgres). Collectors, analysis and API endpoints come in later phases.
 
@@ -28,9 +28,9 @@ Open decisions this phase does **not** depend on: scraping approach, D-010 (Pyth
 
 1. Copy this plan into the repo as **`docs/PHASE1_DATABASE_PLAN.md`**, adding a "Related docs" block linked from `docs/PROGRESS.md`.
 2. Commit the 8 populated docs plus the plan file with one commit ("Add project docs and Phase 1 database plan"). Nothing else is included: no code, no secrets.
-3. Push to `origin main` so Shahab's partner can read it. The repo only holds docs, and Shahab asked for the push.
-4. Give Shahab a short prompt for **Claude in Chrome** that does the Supabase dashboard steps 3.1–3.6 below:
-   - Shahab logs in and handles the database password himself.
+3. Push to `origin main` so Hasaan can read it. The repo only holds docs, and Rohail asked for the push.
+4. Give Rohail a short prompt for **Claude in Chrome** that does the Supabase dashboard steps 3.1–3.6 below:
+   - Rohail logs in and handles the database password.
    - The prompt does not do steps 3.7–3.9, because they need the backend code first.
 
 ## 1. How the backend talks to the database (simple version)
@@ -137,7 +137,7 @@ Spending caps live in backend settings. Costs are recorded in USD, which is what
 
 ---
 
-## 3. Supabase setup: step by step (for Shahab)
+## 3. Supabase setup: step by step (for Rohail)
 
 1. Sign up or log in at supabase.com and use the **Free** plan.
 2. **New project:**
@@ -205,8 +205,8 @@ Root file: `.gitignore` with the contents proposed earlier (bin/obj, node_module
 2. Create the solution and three projects, add the packages, and pin the migration tool.
 3. Write the enums and templates (entities).
 4. Write the DbContext and per-table rules.
-5. Generate the `InitialSchema` and `EnableRls` migrations. Review the generated SQL with Shahab before applying.
-6. Shahab saves the connection string (step 3.7) and builds the tables (step 3.8).
+5. Generate the `InitialSchema` and `EnableRls` migrations. Review the generated SQL with Rohail before applying.
+6. Rohail saves the connection string (step 3.7) and builds the tables (step 3.8).
 7. Run the backend and call `/health/db` to confirm the connection.
 
 ## 5. Doc updates (same phase)
