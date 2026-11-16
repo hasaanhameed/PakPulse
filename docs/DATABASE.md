@@ -140,7 +140,7 @@ The database rejects any other value.
 | Port | `5432` |
 | Database | `postgres` |
 | User | `postgres.mwbhrzvhloqlrcrcrlwh` |
-| Password | Held by Shahab. **Never in the repo, in chat or in `appsettings.json`.** |
+| Password | Held by Rohail and Hasaan. **Never in the repo, in chat or in `appsettings.json`.** |
 
 The backend reads the full connection string from .NET **user secrets** on each developer's laptop; see the [Backend guide](../app/backend/CLAUDE.md#secrets-and-connection). The dashboard never connects to the database directly.
 
