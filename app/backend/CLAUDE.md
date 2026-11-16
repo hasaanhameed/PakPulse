@@ -68,10 +68,11 @@ These follow the milestones in [Progress](../../docs/PROGRESS.md#prototype-miles
 app/backend/
 ├── PakPulse.slnx              ← solution: groups the projects
 └── src/
-    └── PakPulse.Core/         ← entities (one per table) and enums (one per allowed-values list); no packages
+    ├── PakPulse.Core/            ← entities (one per table) and enums (one per allowed-values list); no packages
+    └── PakPulse.Infrastructure/  ← database access: DbContext, one configuration per table, enum converter
 ```
 
-`PakPulse.Infrastructure` (database code) and `PakPulse.Api` (endpoints) come next. Core depends on nothing; Infrastructure uses Core; Api uses both.
+`PakPulse.Api` (endpoints) comes next. Core depends on nothing; Infrastructure uses Core; Api uses both.
 
 ## API endpoints
 
@@ -86,14 +87,13 @@ The tables already exist in Supabase. What each one holds, the allowed values an
 - Map to the `pakpulse` schema with snake_case names. Allowed values (stance, language, emotion…) are stored as lowercase text, e.g. `roman_ur`, `off_topic`.
 - **All `DateTime` values are UTC.** Use `DateTime.UtcNow`. Npgsql refuses non-UTC values for `timestamptz` columns.
 
-**To handle when writing the Infrastructure mapping** (from the review of Core, 2026-11-11):
-- Keys EF can't guess: `PostMetric` (PostId + CollectionRoundId), `NarrativePost` (NarrativeId + PostId), `BriefCitation` (BriefId + PostId), `PostEmbedding` (PostId).
-- Enums need a converter to snake_case text (`RomanUr` → `roman_ur`). `HasConversion<string>()` alone writes `RomanUr`.
-- Columns with a `now()` default (`created_at` etc.) need `HasDefaultValueSql("now()")`, or code must set them. Nothing updates `updated_at` automatically.
+**How the mapping works** (`PakPulse.Infrastructure/Data/`):
+- Column names come from `UseSnakeCaseNamingConvention()` (`CostUsd` → `cost_usd`); each configuration file sets its table name and anything EF can't guess.
+- Enums use `SnakeCaseEnumConverter` (`RomanUr` ↔ `roman_ur`). A new enum must be added to `ConfigureConventions` in `PakPulseDbContext`.
+- `now()` columns use `HasDefaultValueSql("now()")`; `updated_at` is set in `SaveChanges`, since the database has no trigger.
 - Don't add `HasDefaultValue(true)` for `IsActive` / `IsCurrent`: an explicit `false` would be saved as `true`. The C# initial values already cover the default.
-- `PostEmbedding.Embedding` is `float[]` in Core; map it to `vector` with a converter to `Pgvector.Vector`.
-- `RawPost.Payload` → `jsonb`; the decimals in `SpendEntry` need precision (10,4) and (8,2).
-- Mirror each foreign key's `on delete` rule. `pipeline_runs.topic_id` is optional but cascades, so set `DeleteBehavior.Cascade` explicitly.
+- `PostEmbedding.Embedding` is `float[]` in Core and converted to `Pgvector.Vector` for the `vector` column.
+- After any model or configuration change, check EF's view against the SQL scripts: `db.Database.GenerateCreateScript()` prints the tables EF expects (it needs no database connection).
 
 ## Secrets and connection
 

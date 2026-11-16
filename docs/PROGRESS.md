@@ -18,6 +18,12 @@ Research is complete, the architecture is proposed and documentation is in progr
 
 Newest first. One entry per round of work: what changed and where to read about it.
 
+### 2026-11-16: Backend Infrastructure layer (Hasaan)
+
+- **What:** added `PakPulse.Infrastructure`: the `DbContext`, one configuration per table, a snake_case enum converter and `AddInfrastructure()` for the Api to call. Packages: Npgsql EF Core provider, EFCore.NamingConventions, Pgvector.EntityFrameworkCore.
+- **Checked:** EF's generated view of the tables matches `001_initial_schema.sql` (columns, types, keys, delete rules), and every enum round-trips to its database text. Not yet tested against Supabase.
+- **Next:** `PakPulse.Api` with the connection string in user secrets and a `/health/db` check.
+
 ### 2026-11-11: Backend Core layer (Hasaan)
 
 - **What:** created the backend solution (`app/backend/PakPulse.slnx`) and the `PakPulse.Core` project: 16 entity classes matching the tables and 14 enums matching the allowed-value lists. No database connection yet.
@@ -68,7 +74,7 @@ Newest first. One entry per round of work: what changed and where to read about 
 - [ ] 1. Confirm the [open questions](#open-questions).
 - [ ] 2. Choose the demo topic, ~10 keywords (English / Urdu / Roman Urdu) and key accounts.
 - [ ] 3. Set up accounts and spending caps (Apify / twitterapi.io, Threads API app, LLM provider).
-- [ ] 4. Repo scaffolding: database *done (Supabase, 2026-10-20)*; backend Core layer *done (2026-11-11)*, Infrastructure and Api next; NLP service depends on [D-010](DECISIONS.md#d-010-add-a-python-nlp-service).
+- [ ] 4. Repo scaffolding: database *done (Supabase, 2026-10-20)*; backend Core layer *done (2026-11-11)*, Infrastructure *done (2026-11-16)*, Api next; NLP service depends on [D-010](DECISIONS.md#d-010-add-a-python-nlp-service).
 - [ ] 5. Collectors (X first, then Instagram, then Threads), each tested on 100 posts.
 - [ ] 6. Cleaning + language tagging.
 - [ ] 7. LLM labelling (mood, stance, sarcasm + confidence).
