@@ -106,3 +106,4 @@ The tables already exist in Supabase. What each one holds, the allowed values an
   Run it from `src/PakPulse.Api`. User secrets are stored outside the repo, in your user profile, so they can never be committed by accident. `Maximum Pool Size=10` keeps us under the pooler's connection limit.
 - **Or edit the file directly:** the same setting lives in `%APPDATA%\Microsoft\UserSecrets\<UserSecretsId>\secrets.json` (the id is in `PakPulse.Api.csproj`), as `{ "ConnectionStrings:PakPulse": "<the string above>" }`.
 - Committed config (`appsettings.json`) may hold the connection string **without** the password, or nothing at all.
+- **If `/health/db` fails with `tenant/user ... not found`,** the Supabase project has probably paused itself. Free projects pause after 7 days without use. Open the project in the Supabase dashboard and click **Restore**, wait until it is running, then try again.
