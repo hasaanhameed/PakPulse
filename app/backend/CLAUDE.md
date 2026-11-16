@@ -101,7 +101,8 @@ The tables already exist in Supabase. What each one holds, the allowed values an
 - Connect through Supabase's **session pooler**. The host, port and user are in [Database → Connecting](../../docs/DATABASE.md#connecting).
 - The **password** lives only in .NET **user secrets** on each developer's laptop, never in `appsettings.json`, a committed `.env` file, code or chat:
   ```
-  dotnet user-secrets set "ConnectionStrings:PakPulse" "Host=aws-0-ap-south-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.mwbhrzvhloqlrcrcrlwh;Password=<password>;SSL Mode=Require;Search Path=pakpulse,extensions,public"
+  dotnet user-secrets set "ConnectionStrings:PakPulse" "Host=aws-0-ap-south-1.pooler.supabase.com;Port=5432;Database=postgres;Username=postgres.mwbhrzvhloqlrcrcrlwh;Password=<password>;SSL Mode=Require;Search Path=pakpulse,extensions,public;Maximum Pool Size=10"
   ```
-  Run it from the API project's folder once that project exists. User secrets are stored outside the repo, in your user profile, so they can never be committed by accident.
+  Run it from `src/PakPulse.Api`. User secrets are stored outside the repo, in your user profile, so they can never be committed by accident. `Maximum Pool Size=10` keeps us under the pooler's connection limit.
+- **Or edit the file directly:** the same setting lives in `%APPDATA%\Microsoft\UserSecrets\<UserSecretsId>\secrets.json` (the id is in `PakPulse.Api.csproj`), as `{ "ConnectionStrings:PakPulse": "<the string above>" }`.
 - Committed config (`appsettings.json`) may hold the connection string **without** the password, or nothing at all.
