@@ -30,7 +30,7 @@ Newest first. One entry per round of work: what changed and where to read about 
 - **Reviewed:** an independent review found it matches the SQL scripts exactly; its notes for the next layer are in the [Backend guide](../app/backend/CLAUDE.md#database-schema).
 - **Next:** `PakPulse.Infrastructure` (EF Core mapping and Supabase connection), then `PakPulse.Api` with a `/health/db` check.
 
-### 2026-10-22: Dashboard redesign, the Forest frame (Shahab)
+### 2026-10-22: Dashboard redesign, the Forest frame (Rohail)
 
 - **What:** every screen restyled after comparing mock-ups. The light theme stays, framed in dark green (sidebar and the overview's pulse band). There's no serif, and numbers are in monospace. Explanations moved behind ⓘ buttons. Confidence is shown as a signal meter, and the brief is laid out as numbered claims with their sources.
 - **Overview:** a new pulse line of post volume, varied key figures, "Narratives to watch" with trend lines, and "Three things to know" beside the posts behind them.
@@ -41,7 +41,7 @@ Newest first. One entry per round of work: what changed and where to read about 
 - **Read first:** [Frontend design → Look and feel](../app/frontend/DESIGN.md#look-and-feel-the-forest-frame).
 - **Removed:** the unused Recharts chart and the Recharts package. All charts are now plain SVG and CSS.
 
-### 2026-10-20: Database set up on Supabase (Shahab)
+### 2026-10-20: Database set up on Supabase (Rohail)
 
 - **What:** created the Supabase project (free plan, Mumbai) and built all 16 tables in the `pakpulse` schema, with Row Level Security on. No data yet.
 - **Decided:**
@@ -123,7 +123,7 @@ Budget tips:
 | — | Project name: **PakPulse**. | Resolved 2026-10-14 |
 | — | Client naming: **fully generic in all docs** (neither the end client nor the PR company is named). | Resolved 2026-10-14 |
 | — | Raw scraped data (collection round files): **not committed** (kept out via `.gitignore`). | Resolved 2026-10-14 |
-| — | Decision date 2026-10-14; owner Shahab Najmi / InfinityX Digital LTD, no other contributors listed. | Resolved 2026-10-14 |
+| — | Decision date 2026-10-14; owner InfinityX Digital LTD; team: Rohail and Hasaan. | Resolved 2026-10-14 |
 
 ## Risks to watch
 
