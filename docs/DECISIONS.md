@@ -9,7 +9,7 @@
 ## How this log works
 
 - Each decision has an ID (`D-001`, `D-002`, …), a date, a status, its context, the decision itself, consequences, and the alternatives considered.
-- **Status values:** `Proposed` (not yet confirmed by Shahab), `Accepted`, `Rejected`, `Superseded by D-xxx`.
+- **Status values:** `Proposed` (not yet confirmed by the team), `Accepted`, `Rejected`, `Superseded by D-xxx`.
 - **Append only.** New decisions go at the bottom with the next free ID. Existing entries are never silently edited. If a decision changes, add a new entry and mark the old one `Superseded by D-xxx`.
 - Prices are in Pakistani Rupees (Rs) at ~Rs 278 per USD. Services bill in USD, so rupee figures move with the exchange rate. Card payments from Pakistan may add bank or tax charges. Full cost model: [Architecture → Cost model](ARCHITECTURE.md#cost-model).
 
@@ -58,7 +58,7 @@
 - **Date:** 2026-10-14 · **Status:** Accepted
 - **Context:** We need X and Instagram data cheaply and reliably without running scrapers ourselves ([D-001](#d-001-do-not-build-our-own-scrapers)).
 - **Decision:** Use pay-per-result scraping services (e.g. Apify, twitterapi.io) for X and Instagram.
-- **Consequences:** The services handle blocking and maintenance, and they are far cheaper than the official X API ([D-004](#d-004-do-not-use-the-official-x-api-for-now)). ToS risk is reduced, because the scraping runs on their infrastructure, but it is **not zero**, so a legal view is still needed. Which provider to use for X is **TBD — to confirm with Shahab**.
+- **Consequences:** The services handle blocking and maintenance, and they are far cheaper than the official X API ([D-004](#d-004-do-not-use-the-official-x-api-for-now)). ToS risk is reduced, because the scraping runs on their infrastructure, but it is **not zero**, so a legal view is still needed. Which provider to use for X is **TBD — to confirm with the team**.
 - **Alternatives considered:** Official X API (D-004), in-house scrapers (D-001), other aggregators (Bright Data, ScrapingDog, SocialCrawl).
 - **See also:** [Architecture → Data sources](ARCHITECTURE.md#data-sources) · [Progress → Open questions](PROGRESS.md#open-questions)
 
@@ -108,19 +108,19 @@
 ### D-008 Backend framework is ASP.NET Core
 
 - **Date:** 2026-10-14 · **Status:** Accepted
-- **Context / Decision:** The team chose ASP.NET Core (with Entity Framework Core) for the backend API and collector jobs. The .NET version is **TBD — to confirm with Shahab**.
+- **Context / Decision:** The team chose ASP.NET Core (with Entity Framework Core) for the backend API and collector jobs. The .NET version is **TBD — to confirm with the team**.
 - **Consequences:** Some NLP tooling is Python-only (see [D-010](#d-010-add-a-python-nlp-service)).
 - **See also:** [Backend guide](../app/backend/CLAUDE.md)
 
 ### D-009 Frontend framework is Next.js
 
 - **Date:** 2026-10-14 · **Status:** Accepted
-- **Context / Decision:** The team chose Next.js for the dashboard. The router, Node version and styling are **TBD — to confirm with Shahab**.
+- **Context / Decision:** The team chose Next.js for the dashboard. The router, Node version and styling are **TBD — to confirm with the team**.
 - **See also:** [Frontend design](../app/frontend/DESIGN.md)
 
 ### D-010 Add a Python NLP service
 
-- **Date:** 2026-10-14 · **Status:** **Proposed** — awaiting Shahab's confirmation
+- **Date:** 2026-10-14 · **Status:** **Proposed** — awaiting the team's confirmation
 - **Context:** Key NLP tooling, such as BERTopic topic clustering and multilingual/Roman Urdu models like fine-tuned XLM-R, exists mainly in Python.
 - **Decision (proposed):** Add a small Python service (FastAPI) alongside the .NET backend. The backend calls it over HTTP.
 - **Consequences:** Stronger narrative grouping and access to multilingual models, at the cost of a second language and one more service to run. **Where it lives in the repo is TBD.** No folder exists for it yet, and none will be created without approval.
@@ -139,7 +139,7 @@
 
 - **Date:** 2026-10-14 · **Status:** Accepted
 - **Decision:** Call an LLM through an API at two tiers: a small, cheap model for per-post labelling and a stronger model only for the daily brief. Output must be strict JSON. Labelling sends ~20 posts per request.
-- **Consequences:** Controls cost and makes parsing reliable. The provider and models are **TBD — to confirm with Shahab**.
+- **Consequences:** Controls cost and makes parsing reliable. The provider and models are **TBD — to confirm with the team**.
 - **Alternatives considered:** A single strong model for everything (too costly), or self-hosted models (more setup on a laptop).
 - **See also:** [Architecture → NLP and AI layer](ARCHITECTURE.md#nlp-and-ai-layer)
 
@@ -206,7 +206,7 @@
 ### D-021 Database-first: SQL scripts are the master copy
 
 - **Date:** 2026-10-20 · **Status:** Accepted
-- **Context:** The [Phase 1 plan](PHASE1_DATABASE_PLAN.md) proposed code-first, where the backend's C# models generate the tables through EF Core migrations. Shahab chose to build the tables first, so the database could be set up and checked before any backend work.
+- **Context:** The [Phase 1 plan](PHASE1_DATABASE_PLAN.md) proposed code-first, where the backend's C# models generate the tables through EF Core migrations. Rohail chose to build the tables first, so the database could be set up and checked before any backend work.
 - **Decision:** Numbered SQL scripts in `app/database/migrations/` are the master copy of the schema. Changes are made by adding a new script and running it in Supabase. The backend's EF Core models are written to match the tables, and EF Core migrations are **not** used to create or change tables.
 - **Consequences:** The database exists before the backend does, and anyone can rebuild it by running the scripts in order. Each schema change takes two steps (script, then models), and nothing checks automatically that the two match, so the backend should test its mappings against the real database.
 - **Alternatives considered:** Code-first EF Core migrations (the standard .NET way, with only one place to change, but the tables would wait on backend code).
@@ -215,9 +215,9 @@
 ### D-022 Dashboard look: the Forest frame
 
 - **Date:** 2026-10-22 · **Status:** Accepted
-- **Context:** The first dashboard read like a newspaper: serif headings, paper colors, explanations under every heading and the brief as long paragraphs. Shahab wanted it livelier, more modern and easier to scan, without looking AI-generated.
+- **Context:** The first dashboard read like a newspaper: serif headings, paper colors, explanations under every heading and the brief as long paragraphs. Rohail wanted it livelier, more modern and easier to scan, without looking AI-generated.
 - **Decision:** Keep the light Linen theme, framed in Forest night (the sidebar and the overview's pulse band). Drop the serif for IBM Plex Sans, with IBM Plex Mono for every number. Replace explanation sentences with ⓘ tips, show confidence as a signal meter, and lay the brief out as numbered claims with their sources underneath. Emotions take the color of the mood they lean to.
-- **Consequences:** More visual variety with no new interface colors, and much less text on screen. One new data color (Slate, for humour). The overview's Recharts volume chart became a hand-drawn pulse line, so all charts are now plain SVG and CSS and the Recharts package was removed (Shahab, 2026-10-22).
+- **Consequences:** More visual variety with no new interface colors, and much less text on screen. One new data color (Slate, for humour). The overview's Recharts volume chart became a hand-drawn pulse line, so all charts are now plain SVG and CSS and the Recharts package was removed (Rohail, 2026-10-22).
 - **Alternatives considered:** A full dark "monitoring console" theme (rejected as looking AI-generated), the Linen theme only tidied up, and a brighter off-white "paper" theme with 100-square waffle charts.
 - **See also:** [Frontend design → Look and feel](../app/frontend/DESIGN.md#look-and-feel-the-forest-frame)
 
