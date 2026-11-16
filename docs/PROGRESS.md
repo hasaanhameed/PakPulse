@@ -12,7 +12,7 @@
 
 Research is complete and the architecture is proposed. **A first version of the dashboard exists, running on mock data** ([Frontend design](../app/frontend/DESIGN.md#mock-data)). **The database is set up on Supabase** (16 tables, empty; see [Database](DATABASE.md)). **The backend has its Core, Infrastructure and Api layers and connects to Supabase** ([Backend guide](../app/backend/CLAUDE.md#project-layout)). There is no collection or NLP code yet, and the dashboard is not yet connected to the backend.
 
-**Next up:** the save-and-read smoke test, then the first collector (X). Before the collector, choose the X provider and set its spending cap (open questions 3 and 6).
+**Next up:** the first collector (X). Before the collector, choose the X provider and set its spending cap (open questions 3 and 6).
 
 ## Update log
 
@@ -23,7 +23,7 @@ Newest first. One entry per round of work: what changed and where to read about 
 - **What:** added `PakPulse.Api` (an empty ASP.NET Core web project) with `GET /health/db`. `Program.cs` reads the connection string from user secrets, calls `AddInfrastructure()` and checks the connection with `CanConnectAsync()`.
 - **Checked:** `/health/db` returns "Database connection OK" against the real Supabase database. This is the first time the backend has connected.
 - **Found:** the Supabase project had paused itself (free projects pause after 7 days without use). The error was `tenant/user ... not found`. Restoring the project in the Supabase dashboard fixed it.
-- **Not done yet:** the save-and-read smoke test from Hasaan's handover (save a Topic and TopicKeyword, check `roman_ur` and `created_at`, then delete them).
+- **Smoke test passed** (temporary endpoint, not committed): saved a Topic and a TopicKeyword with `Language.RomanUr`. The database stored `roman_ur`, `created_at` was filled by `now()`, reading back through EF returned `RomanUr` and `IsActive = true`, editing the topic moved `updated_at` forward, and both rows were deleted afterwards.
 
 ### 2026-11-16: Backend Infrastructure layer (Hasaan)
 
